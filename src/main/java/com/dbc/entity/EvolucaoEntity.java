@@ -1,15 +1,12 @@
 package com.dbc.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.validation.constraints.NotNull;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class EvolucaoEntity {
+
+    @NotNull
     private Integer idEvolucao;
     private PokemonEntity estagioUm;
     private PokemonEntity estagioDois;
-    private PokemonEntity estagioTres;
+    private PokemonEntity estagioTres; 
 }
