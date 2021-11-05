@@ -17,7 +17,7 @@ public class SpringFoxConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.dbc.pessoaapi"))
+                .apis(RequestHandlerSelectors.basePackage("com.dbc"))
                 .paths(PathSelectors.any())
                 .build()
                 .useDefaultResponseMessages(false)
