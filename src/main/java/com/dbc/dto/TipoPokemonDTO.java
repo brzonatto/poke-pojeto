@@ -6,11 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class TipoPokemonDTO {
     private Integer idTipoPokemon;
     private Integer idPokemon;
-    private Tipo tipo;
+    private List<Tipo> tipo;
 }

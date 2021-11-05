@@ -38,7 +38,6 @@ public class PokemonRepository {
         return pokemonRecuperado;
     }
 
-
     public PokemonEntity getPokemonById(Integer idPokemon) throws RegraDeNegocioException {
         return listaPokemon.stream()
                 .filter(pokemon -> pokemon.getIdPokemon().equals(idPokemon))

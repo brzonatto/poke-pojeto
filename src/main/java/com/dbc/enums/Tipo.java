@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum Tipo {
     NORMAL(1, "NORMAL", "", "PEDRA,FANTASMA,AÇO", "FANTASMA", "LUTADOR"),
     LUTADOR(2, "LUTADOR", "NORMAL,PEDRA,AÇO,GELO,ESCURIDÃO", "VOADOR,VENENOSO,PSÍQUICO,INSETO,FANTASMA,FADA", "PEDRA,INSETO,ESCURIDÃO", "VOADOR,PSÍQUICO,FADA"),
-    VOADOR(3,"VOADOR", "LUTADOR,INSETO,PLANTA", "PEDRA,AÇO,ELÉTRICO", "LUTADOR,TERRA,INSETO,PLANTA", "PEDRA,ELÉTRICO,GELO"),
+    VOADOR(3, "VOADOR", "LUTADOR,INSETO,PLANTA", "PEDRA,AÇO,ELÉTRICO", "LUTADOR,TERRA,INSETO,PLANTA", "PEDRA,ELÉTRICO,GELO"),
     VENENOSO(4, "VENENOSO", "PLANTA,FADA", "VENENOSO,TERRA,PEDRA,FANTASMA,AÇO", "LUTADOR,VENENOSO,PLANTA,FADA", "TERRA,PSÍQUICO"),
     TERRA(5, "TERRA", "VENENOSO,PEDRA,AÇO,FOGO,ELÉTRICO", "VOADOR,INSETO,PLANTA", "VENENOSO,PEDRA,ELÉTRICO", "ÁGUA,PLANTA,GELO"),
     PEDRA(6, "PEDRA", "VOADOR,INSETO,FOGO,GELO", "LUTADOR,TERRA,AÇO", "NORMAL,VOADOR,VENENOSO,FOGO", "LUTADOR,TERRA,AÇO,ÁGUA,PLANTA"),
@@ -36,14 +36,5 @@ public enum Tipo {
         this.fracoContra = fracoContra;
         this.resistenteA = resistenteA;
         this.vulneravelA = vulneravelA;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    @JsonValue
-    public int toValue() {
-        return ordinal();
     }
 }

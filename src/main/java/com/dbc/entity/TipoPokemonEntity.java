@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -13,5 +14,5 @@ import javax.validation.constraints.NotNull;
 public class TipoPokemonEntity {
     private Integer idTipoPokemon;
     private Integer idPokemon;
-    private Tipo tipo;
+    private List<Tipo> tipo;
 }
