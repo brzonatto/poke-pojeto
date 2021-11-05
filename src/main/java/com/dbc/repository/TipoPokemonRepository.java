@@ -12,7 +12,7 @@ public class TipoPokemonRepository {
     private static List<TipoPokemonEntity> tipoPokemonEntityList = new ArrayList<>();
     private AtomicInteger COUNTER = new AtomicInteger();
 
-    public TipoPokemonEntity create(Integer idPokemon, TipoPokemonEntity tipoPokemonEntity) {
+    public TipoPokemonEntity create(TipoPokemonEntity tipoPokemonEntity) {
         tipoPokemonEntity.setIdTipoPokemon(COUNTER.incrementAndGet());
         tipoPokemonEntityList.add(tipoPokemonEntity);
         return tipoPokemonEntity;

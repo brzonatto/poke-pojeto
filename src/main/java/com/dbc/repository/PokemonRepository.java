@@ -39,9 +39,10 @@ public class PokemonRepository {
     }
 
 
-
-
-
-
-
+    public PokemonEntity getPokemonById(Integer idPokemon) throws RegraDeNegocioException {
+        return listaPokemon.stream()
+                .filter(pokemon -> pokemon.getIdPokemon().equals(idPokemon))
+                .findFirst()
+                .orElseThrow(() -> new RegraDeNegocioException("Pokemon não encontrado"));
+    }
 }
