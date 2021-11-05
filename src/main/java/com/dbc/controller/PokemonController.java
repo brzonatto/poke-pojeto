@@ -43,6 +43,12 @@ public class PokemonController {
         return pokemonEditado;
     }
 
+    @ApiOperation("Excluindo Pokémon")
+    @DeleteMapping("/{idPokemon}")
+    public void delete(@PathVariable("idPokemon") Integer id) throws RegraDeNegocioException{
+        pokemonService.delete(id);
+    }
+
 
 
 

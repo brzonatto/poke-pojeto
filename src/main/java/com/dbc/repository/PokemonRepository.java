@@ -43,6 +43,14 @@ public class PokemonRepository {
         return listaPokemon.stream()
                 .filter(pokemon -> pokemon.getIdPokemon().equals(idPokemon))
                 .findFirst()
-                .orElseThrow(() -> new RegraDeNegocioException("Pokemon não encontrado"));
+                .orElseThrow(() -> new RegraDeNegocioException("Pokémon não encontrado"));
+    }
+
+    public void delete(Integer idPokemon) throws RegraDeNegocioException{
+        PokemonEntity pokemonRecuperado = listaPokemon.stream()
+                .filter(pokemonEntity -> pokemonEntity.getIdPokemon().equals(idPokemon))
+                .findFirst()
+                .orElseThrow(() -> new RegraDeNegocioException("Pokémon não encontrado"));
+        listaPokemon.remove(pokemonRecuperado);
     }
 }

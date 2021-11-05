@@ -37,4 +37,8 @@ public class PokemonService {
         PokemonDTO pokemonDTO = objectMapper.convertValue(pokemonAtualizado, PokemonDTO.class);
         return objectMapper.convertValue(pokemonAtualizado, PokemonDTO.class);
     }
+
+    public void delete(Integer id) throws RegraDeNegocioException{
+        pokemonRepository.delete(id);
+    }
 }
