@@ -29,7 +29,7 @@ public class PokemonService {
 
     public List<PokemonDTO> list() {
         return pokemonRepository.list().stream()
-                .map(pessoa -> objectMapper.convertValue(pessoa, PokemonDTO.class))
+                .map(pokemon -> objectMapper.convertValue(pokemon, PokemonDTO.class))
                 .collect(Collectors.toList());
     }
 

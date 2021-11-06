@@ -23,7 +23,7 @@ public class TipoPokemonService {
     public TipoPokemonDTO create(Integer idPokemon, TipoPokemonCreateDTO tipoPokemonCreateDTO) throws RegraDeNegocioException {
         pokemonRepository.getPokemonById(idPokemon);
         TipoPokemonEntity tipoPokemonEntity = objectMapper.convertValue(tipoPokemonCreateDTO, TipoPokemonEntity.class);
-        tipoPokemonEntity.setIdPokemon(idPokemon);
+        tipoPokemonEntity.setPokemon(pokemonRepository.getPokemonById(idPokemon));
         TipoPokemonEntity tipoPokemonEntityCriado = tipoPokemonRepository.create(tipoPokemonEntity);
         TipoPokemonDTO tipoPokemonDTO = objectMapper.convertValue(tipoPokemonEntityCriado, TipoPokemonDTO.class);
         return tipoPokemonDTO;

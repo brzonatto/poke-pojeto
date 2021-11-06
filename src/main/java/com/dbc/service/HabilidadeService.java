@@ -30,7 +30,7 @@ public class HabilidadeService {
 
     public List<HabilidadeDTO> list() {
         return habilidadeRepository.list().stream()
-                .map(pessoa -> objectMapper.convertValue(pessoa, HabilidadeDTO.class))
+                .map(habilidade -> objectMapper.convertValue(habilidade, HabilidadeDTO.class))
                 .collect(Collectors.toList());
     }
 
@@ -38,7 +38,7 @@ public class HabilidadeService {
         HabilidadeEntity habilidadeEntity = objectMapper.convertValue(habilidadeCreateDTO, HabilidadeEntity.class);
         HabilidadeEntity habilidadeAtualizada = habilidadeRepository.update(id, habilidadeEntity);
         HabilidadeDTO habilidadeDTO = objectMapper.convertValue(habilidadeAtualizada, HabilidadeDTO.class);
-        return objectMapper.convertValue(habilidadeAtualizada, HabilidadeDTO.class);
+        return habilidadeDTO;
     }
 
     public void delete(Integer id) throws RegraDeNegocioException{
