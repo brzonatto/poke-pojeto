@@ -37,7 +37,7 @@ public class PokemonController {
 
     @ApiOperation("Editando Pokémon")
     @PutMapping("/{idPokemon}")
-    public PokemonDTO update(@PathVariable ("idPokemon") Integer id,
+    public PokemonDTO update(@PathVariable("idPokemon") Integer id,
                              @Valid @RequestBody PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException{
         PokemonDTO pokemonEditado = pokemonService.update(id, pokemonCreateDTO);
         return pokemonEditado;

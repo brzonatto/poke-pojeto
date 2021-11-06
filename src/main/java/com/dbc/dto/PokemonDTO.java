@@ -1,6 +1,5 @@
 package com.dbc.dto;
 
-import com.dbc.entity.StatusEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +16,5 @@ public class PokemonDTO {
     private Double altura;
     private String categoria;
     private String regiaoDominante;
-    private StatusEntity status;
+    private StatusDTO status;
 }
