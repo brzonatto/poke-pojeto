@@ -34,9 +34,12 @@ public class PokemonService {
                 .collect(Collectors.toList());
     }
 
-    public PokemonDTO update(Integer id, PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException {
+    public PokemonDTO update(Integer idPokemon, PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException {
+        if (somaStatus(pokemonCreateDTO) >= 580 && pokemonCreateDTO.getRegiaoDominante() == null) {
+            throw new RegraDeNegocioException("deve conter região dominate, pois o pokémon é lendário");
+        }
         PokemonEntity pokemonEntity = objectMapper.convertValue(pokemonCreateDTO, PokemonEntity.class);
-        PokemonEntity pokemonAtualizado = pokemonRepository.update(id, pokemonEntity);
+        PokemonEntity pokemonAtualizado = pokemonRepository.update(idPokemon, pokemonEntity);
         PokemonDTO pokemonDTO = objectMapper.convertValue(pokemonAtualizado, PokemonDTO.class);
         return pokemonDTO;
     }

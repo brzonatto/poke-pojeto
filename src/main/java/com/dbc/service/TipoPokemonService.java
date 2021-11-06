@@ -2,6 +2,7 @@ package com.dbc.service;
 
 import com.dbc.dto.TipoPokemonCreateDTO;
 import com.dbc.dto.TipoPokemonDTO;
+import com.dbc.entity.PokemonEntity;
 import com.dbc.entity.TipoPokemonEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.repository.PokemonRepository;
@@ -26,12 +27,17 @@ public class TipoPokemonService {
         tipoPokemonEntity.setPokemon(pokemonRepository.getPokemonById(idPokemon));
         TipoPokemonEntity tipoPokemonEntityCriado = tipoPokemonRepository.create(tipoPokemonEntity);
         TipoPokemonDTO tipoPokemonDTO = objectMapper.convertValue(tipoPokemonEntityCriado, TipoPokemonDTO.class);
+        tipoPokemonDTO.setIdPokemon(idPokemon);
         return tipoPokemonDTO;
     }
 
     public List<TipoPokemonDTO> list() {
         return tipoPokemonRepository.list().stream()
-                .map(tipo -> objectMapper.convertValue(tipo, TipoPokemonDTO.class))
+                .map(tipo -> {
+                    TipoPokemonDTO tipoPokemonDTO = objectMapper.convertValue(tipo, TipoPokemonDTO.class);
+                    tipoPokemonDTO.setIdPokemon(tipo.getPokemon().getIdPokemon());
+                    return tipoPokemonDTO;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -44,5 +50,10 @@ public class TipoPokemonService {
 
     public void delete(Integer idTipo) throws RegraDeNegocioException {
         tipoPokemonRepository.delete(idTipo);
+    }
+
+    public Boolean existsPoke(Integer idPokemon) {
+        return tipoPokemonRepository.list().stream()
+                fi
     }
 }
