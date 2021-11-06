@@ -27,7 +27,7 @@ public class TipoPokemonRepository {
         TipoPokemonEntity tipoPokemonEntityRecuperado = tipoPokemonEntityList.stream()
                 .filter(tipo -> tipo.getIdTipoPokemon().equals(idTipo))
                 .findFirst()
-                .orElseThrow(() -> new RegraDeNegocioException("Pokemon não encontrado"));
+                .orElseThrow(() -> new RegraDeNegocioException("tipo não encontrado"));
         tipoPokemonEntityRecuperado.setTipo(tipoPokemonEntity.getTipo());
         return tipoPokemonEntityRecuperado;
     }
@@ -37,5 +37,6 @@ public class TipoPokemonRepository {
                 .filter(tipo -> tipo.getTipo().equals(idTipo))
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("Tipo não encontrado"));
+        tipoPokemonEntityList.remove(tipoPokemonEntity);
     }
 }

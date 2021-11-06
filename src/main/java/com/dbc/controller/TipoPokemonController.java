@@ -20,7 +20,7 @@ public class TipoPokemonController {
     private final TipoPokemonService tipoPokemonService;
 
     @PostMapping("/{idPokemon}")
-    public TipoPokemonDTO create(@PathVariable Integer idPokemon, @RequestBody TipoPokemonCreateDTO tipoPokemonCreateDTO) throws RegraDeNegocioException {
+    public TipoPokemonDTO create(@PathVariable("idPokemon") Integer idPokemon, @RequestBody TipoPokemonCreateDTO tipoPokemonCreateDTO) throws RegraDeNegocioException {
         TipoPokemonDTO tipoPokemonDTOCriado = tipoPokemonService.create(idPokemon, tipoPokemonCreateDTO);
         return tipoPokemonDTOCriado;
     }
@@ -31,12 +31,12 @@ public class TipoPokemonController {
     }
 
     @PutMapping("/{idTipo}")
-    public TipoPokemonDTO update(@PathVariable Integer idTipo, @RequestBody TipoPokemonCreateDTO tipoPokemonCreateDTO) throws RegraDeNegocioException {
+    public TipoPokemonDTO update(@PathVariable("idTipo") Integer idTipo, @RequestBody TipoPokemonCreateDTO tipoPokemonCreateDTO) throws RegraDeNegocioException {
         return tipoPokemonService.update(idTipo, tipoPokemonCreateDTO);
     }
 
     @DeleteMapping("/{idTipo}")
-    public void delete(@PathVariable Integer idTipo) throws RegraDeNegocioException {
+    public void delete(@PathVariable("idTipo") Integer idTipo) throws RegraDeNegocioException {
         tipoPokemonService.delete(idTipo);
     }
 }
