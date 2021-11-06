@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HabilidadeCreateDTO {
-
     private String nome;
     private Double multiplicacaoDePoder;
 }

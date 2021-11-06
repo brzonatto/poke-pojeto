@@ -25,7 +25,7 @@ public class PokemonController {
 
     @ApiOperation("Adicionando Pokémon")
     @PostMapping
-    public PokemonDTO create (@RequestBody PokemonCreateDTO pokemonCreateDTO){
+    public PokemonDTO create (@RequestBody @Valid PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException {
         PokemonDTO pokemonCriado = pokemonService.create(pokemonCreateDTO);
         return pokemonCriado;
     }
