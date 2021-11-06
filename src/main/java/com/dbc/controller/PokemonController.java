@@ -20,7 +20,6 @@ import java.util.List;
 @Validated
 @RequestMapping("/pokemon")
 public class PokemonController {
-
     private final PokemonService pokemonService;
 
     @ApiOperation("Adicionando Pokémon")

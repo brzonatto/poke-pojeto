@@ -4,6 +4,7 @@ import com.dbc.dto.TipoPokemonCreateDTO;
 import com.dbc.dto.TipoPokemonDTO;
 import com.dbc.entity.PokemonEntity;
 import com.dbc.entity.TipoPokemonEntity;
+import com.dbc.enums.Tipo;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.repository.PokemonRepository;
 import com.dbc.repository.TipoPokemonRepository;
@@ -22,6 +23,12 @@ public class TipoPokemonService {
     private final ObjectMapper objectMapper;
 
     public TipoPokemonDTO create(Integer idPokemon, TipoPokemonCreateDTO tipoPokemonCreateDTO) throws RegraDeNegocioException {
+        if (existPoke(idPokemon)) {
+            throw new RegraDeNegocioException("pokémon deve ser diferente, pois, já existe tipo cadastrado");
+        }
+        if (existTipoRepetido(tipoPokemonCreateDTO.getTipo())) {
+            throw new RegraDeNegocioException("não deve conter tipos repetidos");
+        }
         pokemonRepository.getPokemonById(idPokemon);
         TipoPokemonEntity tipoPokemonEntity = objectMapper.convertValue(tipoPokemonCreateDTO, TipoPokemonEntity.class);
         tipoPokemonEntity.setPokemon(pokemonRepository.getPokemonById(idPokemon));
@@ -52,8 +59,15 @@ public class TipoPokemonService {
         tipoPokemonRepository.delete(idTipo);
     }
 
-    public Boolean existsPoke(Integer idPokemon) {
-        return tipoPokemonRepository.list().stream()
-                fi
+    public Boolean existPoke(Integer idPokemon) {
+        return list().stream().anyMatch(tipo -> tipo.getIdPokemon().equals(idPokemon));
+    }
+
+    public Boolean existTipoRepetido(List<Tipo> tipoList) {
+        List<Tipo> semRepetidos = tipoList.stream().distinct().collect(Collectors.toList());
+        if (semRepetidos.size() != tipoList.size()) {
+            return true;
+        }
+        return false;
     }
 }

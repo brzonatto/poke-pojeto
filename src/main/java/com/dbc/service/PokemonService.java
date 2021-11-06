@@ -5,6 +5,7 @@ import com.dbc.dto.PokemonDTO;
 import com.dbc.entity.PokemonEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.repository.PokemonRepository;
+import com.dbc.repository.TipoPokemonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @Service
 public class PokemonService {
     private final PokemonRepository pokemonRepository;
+    private final TipoPokemonRepository tipoPokemonRepository;
     private final ObjectMapper objectMapper;
 
     public PokemonDTO create(PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException {
@@ -44,8 +46,9 @@ public class PokemonService {
         return pokemonDTO;
     }
 
-    public void delete(Integer id) throws RegraDeNegocioException {
-        pokemonRepository.delete(id);
+    public void delete(Integer idPokemon) throws RegraDeNegocioException {
+        tipoPokemonRepository.delete(tipoPokemonRepository.getTipoByPokemon(idPokemon).getIdTipoPokemon());
+        pokemonRepository.delete(idPokemon);
     }
 
     public Integer somaStatus(PokemonCreateDTO pokemonCreateDTO) {

@@ -1,5 +1,6 @@
 package com.dbc.repository;
 
+import com.dbc.entity.PokemonEntity;
 import com.dbc.entity.TipoPokemonEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
 import org.springframework.stereotype.Repository;
@@ -34,9 +35,16 @@ public class TipoPokemonRepository {
 
     public void delete(Integer idTipo) throws RegraDeNegocioException {
         TipoPokemonEntity tipoPokemonEntity = tipoPokemonEntityList.stream()
-                .filter(tipo -> tipo.getTipo().equals(idTipo))
+                .filter(tipo -> tipo.getIdTipoPokemon().equals(idTipo))
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("Tipo não encontrado"));
         tipoPokemonEntityList.remove(tipoPokemonEntity);
+    }
+
+    public TipoPokemonEntity getTipoByPokemon(Integer idPokemon) throws RegraDeNegocioException {
+        return tipoPokemonEntityList.stream()
+                .filter(tipo -> tipo.getPokemon().getIdPokemon().equals(idPokemon))
+                .findFirst()
+                .orElseThrow(() -> new RegraDeNegocioException("Pokémon não encontrado"));
     }
 }
