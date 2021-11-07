@@ -52,4 +52,7 @@ public class PokemonRepository {
                 .orElseThrow(() -> new RegraDeNegocioException("Pokémon não encontrado"));
         listaPokemon.remove(pokemonRecuperado);
     }
+
+
+
 }

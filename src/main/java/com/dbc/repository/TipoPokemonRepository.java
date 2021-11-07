@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Repository
 public class TipoPokemonRepository {
@@ -46,5 +47,17 @@ public class TipoPokemonRepository {
                 .filter(tipo -> tipo.getPokemon().getIdPokemon().equals(idPokemon))
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("Pokémon não encontrado"));
+    }
+
+    public List<PokemonEntity> listarPorTipo(String tipo){
+        List<PokemonEntity> listaRetorno = new ArrayList<>();
+
+        List<TipoPokemonEntity> listaTipo = tipoPokemonEntityList.stream()
+                .filter(tipoPokemonEntityList -> tipoPokemonEntityList.getTipo().get(0).toString().equals(tipo) ||
+                        tipoPokemonEntityList.getTipo().get(1).toString().equals(tipo))
+                .collect(Collectors.toList());
+
+        listaRetorno = listaTipo.stream().map(pokemonEntity -> pokemonEntity.getPokemon()).collect(Collectors.toList());
+        return listaRetorno;
     }
 }

@@ -1,5 +1,6 @@
 package com.dbc.controller;
 
+import com.dbc.dto.PokemonDTO;
 import com.dbc.dto.TipoPokemonCreateDTO;
 import com.dbc.dto.TipoPokemonDTO;
 import com.dbc.exceptions.RegraDeNegocioException;
@@ -38,5 +39,10 @@ public class TipoPokemonController {
     @DeleteMapping("/{idTipo}")
     public void delete(@PathVariable("idTipo") Integer idTipo) throws RegraDeNegocioException {
         tipoPokemonService.delete(idTipo);
+    }
+
+    @GetMapping("/listarportipo/{tipo}")
+    public List<PokemonDTO> listarPorTipo(@PathVariable("tipo") String tipo){
+        return tipoPokemonService.listarPorTipo(tipo);
     }
 }

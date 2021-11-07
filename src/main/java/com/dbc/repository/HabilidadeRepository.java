@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Repository
 public class HabilidadeRepository {
@@ -46,4 +47,15 @@ public class HabilidadeRepository {
                 .orElseThrow(() -> new RegraDeNegocioException("Habilidade não encontrada"));
         listaHabilidades.remove(habilidadeRecuperada);
     }
+
+//    public List<PokemonEntity> listarPorHabilidade(String habilidade){
+//        List<PokemonEntity> listaRetorno = new ArrayList<>();
+//
+//        List<HabilidadeEntity> listaHabilidade = listaHabilidades.stream()
+//                .filter(listaHabilidades -> listaHabilidades.getNome().equals(habilidade))
+//                .collect(Collectors.toList());
+//
+//        listaRetorno = listaHabilidade.stream().map(habilidadeEntity -> habilidadeEntity.).collect(Collectors.toList());
+//
+//    }
 }

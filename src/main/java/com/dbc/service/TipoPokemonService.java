@@ -1,5 +1,6 @@
 package com.dbc.service;
 
+import com.dbc.dto.PokemonDTO;
 import com.dbc.dto.TipoPokemonCreateDTO;
 import com.dbc.dto.TipoPokemonDTO;
 import com.dbc.entity.PokemonEntity;
@@ -69,5 +70,14 @@ public class TipoPokemonService {
             return true;
         }
         return false;
+    }
+
+    public List<PokemonDTO> listarPorTipo(String tipo){
+        return tipoPokemonRepository.listarPorTipo(tipo).stream()
+                .map(pokemon-> {
+                    PokemonDTO pokemonDTO = objectMapper.convertValue(pokemon, PokemonDTO.class);
+                    return pokemonDTO;
+                })
+                .collect(Collectors.toList());
     }
 }
