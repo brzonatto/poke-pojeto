@@ -58,4 +58,21 @@ public class EvolucaoRepository {
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("Evolução não encontrada"));
     }
+
+    public Boolean existEvolucaoByPokemon(Integer idPokemon) {
+        return evolucaoEntityList.stream().anyMatch(evolucao -> {
+            if(evolucao.getEstagioUm() == null && evolucao.getEstagioDois() == null
+                    && evolucao.getEstagioTres() == null) {
+                return false;
+            }
+            if (evolucao.getEstagioTres() != null) {
+                return evolucao.getEstagioUm().getIdPokemon().equals(idPokemon) ||
+                        evolucao.getEstagioDois().getIdPokemon().equals(idPokemon) ||
+                        evolucao.getEstagioTres().getIdPokemon().equals(idPokemon);
+            }
+            return evolucao.getEstagioUm().getIdPokemon().equals(idPokemon) ||
+                    evolucao.getEstagioDois().getIdPokemon().equals(idPokemon);
+
+        });
+    }
 }

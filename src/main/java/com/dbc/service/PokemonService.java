@@ -49,10 +49,10 @@ public class PokemonService {
     }
 
     public void delete(Integer idPokemon) throws RegraDeNegocioException {
-        if (tipoPokemonRepository.getTipoByPokemon(idPokemon) != null) {
+        if (tipoPokemonRepository.existTipoByPokemon(idPokemon)) {
             tipoPokemonRepository.delete(tipoPokemonRepository.getTipoByPokemon(idPokemon).getIdTipoPokemon());
         }
-        if (true) {
+        if (evolucaoRepository.existEvolucaoByPokemon(idPokemon)) {
             evolucaoRepository.delete(evolucaoRepository.getEvolucaoByPokemon(idPokemon).getIdEvolucao());
         }
         pokemonRepository.delete(idPokemon);
