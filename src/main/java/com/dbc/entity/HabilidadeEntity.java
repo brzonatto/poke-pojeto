@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HabilidadeEntity {
-
     private Integer idHabilidade;
     private String nome;
     private Double multiplicacaoDePoder;
+    private PokemonEntity pokemon;
 }

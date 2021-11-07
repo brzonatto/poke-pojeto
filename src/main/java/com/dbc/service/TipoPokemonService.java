@@ -75,8 +75,7 @@ public class TipoPokemonService {
     public List<PokemonDTO> listarPorTipo(String tipo){
         return tipoPokemonRepository.listarPorTipo(tipo).stream()
                 .map(pokemon-> {
-                    PokemonDTO pokemonDTO = objectMapper.convertValue(pokemon, PokemonDTO.class);
-                    return pokemonDTO;
+                    return objectMapper.convertValue(pokemon, PokemonDTO.class);
                 })
                 .collect(Collectors.toList());
     }

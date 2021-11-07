@@ -48,14 +48,14 @@ public class HabilidadeRepository {
         listaHabilidades.remove(habilidadeRecuperada);
     }
 
-//    public List<PokemonEntity> listarPorHabilidade(String habilidade){
-//        List<PokemonEntity> listaRetorno = new ArrayList<>();
-//
-//        List<HabilidadeEntity> listaHabilidade = listaHabilidades.stream()
-//                .filter(listaHabilidades -> listaHabilidades.getNome().equals(habilidade))
-//                .collect(Collectors.toList());
-//
-//        listaRetorno = listaHabilidade.stream().map(habilidadeEntity -> habilidadeEntity.).collect(Collectors.toList());
-//
-//    }
+    public List<PokemonEntity> listarPorHabilidade(String habilidade){
+        List<PokemonEntity> listaRetorno = new ArrayList<>();
+
+        List<HabilidadeEntity> listaHabilidade = listaHabilidades.stream()
+                .filter(listaHabilidades -> listaHabilidades.getNome().equals(habilidade))
+                .collect(Collectors.toList());
+
+        listaRetorno = listaHabilidade.stream().map(habilidadeEntity -> habilidadeEntity.getPokemon()).collect(Collectors.toList());
+        return listaRetorno;
+    }
 }

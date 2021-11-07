@@ -44,4 +44,12 @@ public class HabilidadeService {
     public void delete(Integer id) throws RegraDeNegocioException{
         habilidadeRepository.delete(id);
     }
+
+    public List<PokemonDTO> listarPorHabilidade(String habilidade){
+        return habilidadeRepository.listarPorHabilidade(habilidade).stream()
+                .map(pokemon -> {
+                    return objectMapper.convertValue(pokemon, PokemonDTO.class);
+                })
+                .collect(Collectors.toList());
+    }
 }

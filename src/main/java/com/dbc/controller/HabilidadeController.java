@@ -2,6 +2,7 @@ package com.dbc.controller;
 
 import com.dbc.dto.HabilidadeCreateDTO;
 import com.dbc.dto.HabilidadeDTO;
+import com.dbc.dto.PokemonDTO;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.service.HabilidadeService;
 import io.swagger.annotations.ApiOperation;
@@ -46,5 +47,11 @@ public class HabilidadeController {
     @DeleteMapping("/{idHabilidade}")
     public void delete(@PathVariable("idHabilidade") Integer id) throws RegraDeNegocioException{
         habilidadeService.delete(id);
+    }
+
+    @ApiOperation("Listando por Habilidade")
+    @GetMapping("listarporhabilidade/{habilidade}")
+    public List<PokemonDTO> listarPokemonHabilidade(@PathVariable("habilidade") String habilidade){
+        return habilidadeService.listarPorHabilidade(habilidade);
     }
 }
