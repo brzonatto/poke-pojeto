@@ -22,8 +22,9 @@ public class EvolucaoService {
     private final ObjectMapper objectMapper;
 
     public EvolucaoDTO create(EvolucaoCreateDTO evolucaoCreateDTO) throws RegraDeNegocioException {
-        if (existPoke(evolucaoCreateDTO.getIdEstagioUm()) || existPoke(evolucaoCreateDTO.getIdEstagioDois())
-                || existPoke(evolucaoCreateDTO.getIdEstagioTres())) {
+        if (evolucaoRepository.existEvolucaoByPokemon(evolucaoCreateDTO.getIdEstagioUm())
+                || evolucaoRepository.existEvolucaoByPokemon(evolucaoCreateDTO.getIdEstagioDois())
+                || evolucaoRepository.existEvolucaoByPokemon(evolucaoCreateDTO.getIdEstagioTres())) {
             throw new RegraDeNegocioException("Pokémon deve ser diferente, pois, já existe em uma evolução cadastrada");
         }
         if (evolucaoCreateDTO.getIdEstagioUm() == evolucaoCreateDTO.getIdEstagioDois()
@@ -60,8 +61,9 @@ public class EvolucaoService {
         oi.setEstagioDois(evolucaoBackup.getEstagioDois());
         oi.setEstagioTres(evolucaoBackup.getEstagioTres());
         updateToNull(idEvolucao);
-        if (existPoke(evolucaoCreateDTO.getIdEstagioUm()) || existPoke(evolucaoCreateDTO.getIdEstagioDois())
-                || existPoke(evolucaoCreateDTO.getIdEstagioTres())) {
+        if (evolucaoRepository.existEvolucaoByPokemon(evolucaoCreateDTO.getIdEstagioUm())
+                || evolucaoRepository.existEvolucaoByPokemon(evolucaoCreateDTO.getIdEstagioDois())
+                || evolucaoRepository.existEvolucaoByPokemon(evolucaoCreateDTO.getIdEstagioTres())) {
             evolucaoRepository.update(idEvolucao, oi);
             throw new RegraDeNegocioException("Pokémon deve ser diferente, pois, já existe em uma evolução cadastrada");
         }
@@ -84,23 +86,6 @@ public class EvolucaoService {
 
     public void delete(Integer idEvolucao) throws RegraDeNegocioException {
         evolucaoRepository.delete(idEvolucao);
-    }
-
-    public Boolean existPoke(Integer idPokemon) {
-        return list().stream().anyMatch(evolucao -> {
-            if(evolucao.getEstagioUm() == null && evolucao.getEstagioDois() == null
-                    && evolucao.getEstagioTres() == null) {
-                return false;
-            }
-            if (evolucao.getEstagioTres() != null) {
-                return evolucao.getEstagioUm().getIdPokemon().equals(idPokemon) ||
-                        evolucao.getEstagioDois().getIdPokemon().equals(idPokemon) ||
-                        evolucao.getEstagioTres().getIdPokemon().equals(idPokemon);
-            }
-            return evolucao.getEstagioUm().getIdPokemon().equals(idPokemon) ||
-                    evolucao.getEstagioDois().getIdPokemon().equals(idPokemon);
-
-        });
     }
 
     public void updateToNull(Integer idEvolucao) throws RegraDeNegocioException {
