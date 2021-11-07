@@ -22,8 +22,8 @@ public class HabilidadeService {
     private final HabilidadeRepository habilidadeRepository;
     private final ObjectMapper objectMapper;
 
-    public HabilidadeDTO create(HabilidadeCreateDTO habilidadeDTO){
-        HabilidadeEntity habilidadeEntity = objectMapper.convertValue(habilidadeDTO, HabilidadeEntity.class);
+    public HabilidadeDTO create(HabilidadeCreateDTO habilidadeCreateDTO){
+        HabilidadeEntity habilidadeEntity = objectMapper.convertValue(habilidadeCreateDTO, HabilidadeEntity.class);
         HabilidadeEntity habilidadeCriada = habilidadeRepository.create(habilidadeEntity);
         return objectMapper.convertValue(habilidadeCriada, HabilidadeDTO.class);
     }
@@ -34,22 +34,22 @@ public class HabilidadeService {
                 .collect(Collectors.toList());
     }
 
-    public HabilidadeDTO update(Integer id, HabilidadeCreateDTO habilidadeCreateDTO) throws RegraDeNegocioException {
+    public HabilidadeDTO update(Integer idHabilidade, HabilidadeCreateDTO habilidadeCreateDTO) throws RegraDeNegocioException {
         HabilidadeEntity habilidadeEntity = objectMapper.convertValue(habilidadeCreateDTO, HabilidadeEntity.class);
-        HabilidadeEntity habilidadeAtualizada = habilidadeRepository.update(id, habilidadeEntity);
+        HabilidadeEntity habilidadeAtualizada = habilidadeRepository.update(idHabilidade, habilidadeEntity);
         HabilidadeDTO habilidadeDTO = objectMapper.convertValue(habilidadeAtualizada, HabilidadeDTO.class);
         return habilidadeDTO;
     }
 
-    public void delete(Integer id) throws RegraDeNegocioException{
-        habilidadeRepository.delete(id);
+    public void delete(Integer idHabilidade) throws RegraDeNegocioException{
+        habilidadeRepository.delete(idHabilidade);
     }
 
-    public List<PokemonDTO> listarPorHabilidade(String habilidade){
-        return habilidadeRepository.listarPorHabilidade(habilidade).stream()
-                .map(pokemon -> {
-                    return objectMapper.convertValue(pokemon, PokemonDTO.class);
-                })
-                .collect(Collectors.toList());
-    }
+//    public List<PokemonDTO> listarPorHabilidade(String habilidade){
+//        return habilidadeRepository.listarPorHabilidade(habilidade).stream()
+//                .map(pokemon -> {
+//                    return objectMapper.convertValue(pokemon, PokemonDTO.class);
+//                })
+//                .collect(Collectors.toList());
+//    }
 }

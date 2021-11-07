@@ -25,7 +25,7 @@ public class HabilidadeController {
 
     @ApiOperation("Adicionando Habilidade")
     @PostMapping
-    public HabilidadeDTO create (@RequestBody HabilidadeCreateDTO habilidadeCreateDTO){
+    public HabilidadeDTO create (@RequestBody @Valid HabilidadeCreateDTO habilidadeCreateDTO){
         HabilidadeDTO habilidadeCriada = habilidadeService.create(habilidadeCreateDTO);
         return habilidadeCriada;
     }
@@ -37,21 +37,21 @@ public class HabilidadeController {
 
     @ApiOperation("Editando Habilidade")
     @PutMapping("/{idHabilidade}")
-    public HabilidadeDTO update(@PathVariable ("idHabilidade") Integer id,
+    public HabilidadeDTO update(@PathVariable("idHabilidade") Integer idHabilidade,
                                 @Valid @RequestBody HabilidadeCreateDTO habilidadeCreateDTO) throws RegraDeNegocioException {
-        HabilidadeDTO habilidadeEditada = habilidadeService.update(id, habilidadeCreateDTO);
+        HabilidadeDTO habilidadeEditada = habilidadeService.update(idHabilidade, habilidadeCreateDTO);
         return habilidadeEditada;
     }
 
     @ApiOperation("Excluindo Habilidade")
     @DeleteMapping("/{idHabilidade}")
-    public void delete(@PathVariable("idHabilidade") Integer id) throws RegraDeNegocioException{
-        habilidadeService.delete(id);
+    public void delete(@PathVariable("idHabilidade") Integer idHabilidade) throws RegraDeNegocioException{
+        habilidadeService.delete(idHabilidade);
     }
 
-    @ApiOperation("Listando por Habilidade")
-    @GetMapping("listarporhabilidade/{habilidade}")
-    public List<PokemonDTO> listarPokemonHabilidade(@PathVariable("habilidade") String habilidade){
-        return habilidadeService.listarPorHabilidade(habilidade);
-    }
+//    @ApiOperation("Listando por Habilidade")
+//    @GetMapping("listarporhabilidade/{habilidade}")
+//    public List<PokemonDTO> listarPokemonHabilidade(@PathVariable("habilidade") String habilidade){
+//        return habilidadeService.listarPorHabilidade(habilidade);
+//    }
 }

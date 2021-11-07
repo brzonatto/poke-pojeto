@@ -95,6 +95,4 @@ public class EvolucaoService {
         evolucaoEntity.setEstagioTres(null);
         evolucaoRepository.update(idEvolucao, evolucaoEntity);
     }
-
-
 }
