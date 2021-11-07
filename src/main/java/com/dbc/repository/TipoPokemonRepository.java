@@ -46,7 +46,7 @@ public class TipoPokemonRepository {
         return tipoPokemonEntityList.stream()
                 .filter(tipo -> tipo.getPokemon().getIdPokemon().equals(idPokemon))
                 .findFirst()
-                .orElseThrow(() -> new RegraDeNegocioException("Pokémon não encontrado"));
+                .orElseThrow(() -> new RegraDeNegocioException("Tipo não encontrado"));
     }
 
     public List<PokemonEntity> listarPorTipo(String tipo){

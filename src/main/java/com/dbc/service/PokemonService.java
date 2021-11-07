@@ -4,6 +4,7 @@ import com.dbc.dto.PokemonCreateDTO;
 import com.dbc.dto.PokemonDTO;
 import com.dbc.entity.PokemonEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
+import com.dbc.repository.EvolucaoRepository;
 import com.dbc.repository.PokemonRepository;
 import com.dbc.repository.TipoPokemonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class PokemonService {
     private final PokemonRepository pokemonRepository;
     private final TipoPokemonRepository tipoPokemonRepository;
+    private final EvolucaoRepository evolucaoRepository;
     private final ObjectMapper objectMapper;
 
     public PokemonDTO create(PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException {
@@ -47,7 +49,12 @@ public class PokemonService {
     }
 
     public void delete(Integer idPokemon) throws RegraDeNegocioException {
-        tipoPokemonRepository.delete(tipoPokemonRepository.getTipoByPokemon(idPokemon).getIdTipoPokemon());
+        if (tipoPokemonRepository.getTipoByPokemon(idPokemon) != null) {
+            tipoPokemonRepository.delete(tipoPokemonRepository.getTipoByPokemon(idPokemon).getIdTipoPokemon());
+        }
+        if (true) {
+            evolucaoRepository.delete(evolucaoRepository.getEvolucaoByPokemon(idPokemon).getIdEvolucao());
+        }
         pokemonRepository.delete(idPokemon);
     }
 

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class EvolucaoController {
     private final EvolucaoService evolucaoService;
 
     @PostMapping
-    public EvolucaoDTO create(@RequestBody EvolucaoCreateDTO evolucaoCreateDTO) throws RegraDeNegocioException {
+    public EvolucaoDTO create(@RequestBody @Valid EvolucaoCreateDTO evolucaoCreateDTO) throws RegraDeNegocioException {
         EvolucaoDTO evolucaoDTOCriado = evolucaoService.create(evolucaoCreateDTO);
         return evolucaoDTOCriado;
     }
@@ -31,7 +32,7 @@ public class EvolucaoController {
     }
 
     @PutMapping("/{idEvolucao}")
-    public EvolucaoDTO update(@PathVariable("idEvolucao") Integer idEvolucao, @RequestBody EvolucaoCreateDTO evolucaoCreateDTO) throws RegraDeNegocioException {
+    public EvolucaoDTO update(@PathVariable("idEvolucao") Integer idEvolucao, @RequestBody @Valid EvolucaoCreateDTO evolucaoCreateDTO) throws RegraDeNegocioException {
         return evolucaoService.update(idEvolucao, evolucaoCreateDTO);
     }
 

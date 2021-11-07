@@ -1,5 +1,6 @@
 package com.dbc.repository;
 
+import com.dbc.dto.EvolucaoDTO;
 import com.dbc.entity.EvolucaoEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
 import org.springframework.stereotype.Repository;
@@ -40,5 +41,21 @@ public class EvolucaoRepository {
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("evolução não encontrada"));
         evolucaoEntityList.remove(evolucaoEntityRecuperada);
+    }
+
+    public EvolucaoEntity getEvolucaoById(Integer idEvolucao) throws RegraDeNegocioException {
+        return evolucaoEntityList.stream()
+                .filter(evolucao -> evolucao.getIdEvolucao().equals(idEvolucao))
+                .findFirst()
+                .orElseThrow(() -> new RegraDeNegocioException("evolução não encontrada"));
+    }
+
+    public EvolucaoEntity getEvolucaoByPokemon(Integer idPokemon) throws RegraDeNegocioException {
+        return evolucaoEntityList.stream()
+                .filter(evolucao -> evolucao.getEstagioUm().getIdPokemon().equals(idPokemon)
+                        || evolucao.getEstagioDois().getIdPokemon().equals(idPokemon)
+                        || evolucao.getEstagioTres().getIdPokemon().equals(idPokemon))
+                .findFirst()
+                .orElseThrow(() -> new RegraDeNegocioException("Evolução não encontrada"));
     }
 }
