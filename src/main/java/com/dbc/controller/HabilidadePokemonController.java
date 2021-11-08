@@ -30,10 +30,11 @@ public class HabilidadePokemonController {
             @ApiResponse(code = 400, message = "Habilidade com dados inconsistentes"),
             @ApiResponse(code = 500, message = "Exceção no sistema")
     })
-    @PostMapping
-
-    public HabilidadePokemonDTO create(@RequestBody @Valid HabilidadePokemonCreateDTO habilidadePokemonCreateDTO) {
-        HabilidadePokemonDTO habilidadeCriada = habilidadePokemonService.create(habilidadePokemonCreateDTO);
+    @PostMapping("/{idPokemon}")
+    public HabilidadePokemonDTO create(@PathVariable("idPokemon") Integer idPokemon,
+                                       @RequestBody @Valid HabilidadePokemonCreateDTO habilidadePokemonCreateDTO)
+            throws RegraDeNegocioException {
+        HabilidadePokemonDTO habilidadeCriada = habilidadePokemonService.create(idPokemon, habilidadePokemonCreateDTO);
         return habilidadeCriada;
     }
 

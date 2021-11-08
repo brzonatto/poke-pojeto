@@ -11,6 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 public class HabilidadePokemonEntity {
     private Integer idHabilidadePokemon;
-    private PokemonEntity pokemonEntity;
+    private PokemonEntity pokemon;
     private List<HabilidadeEntity> habilidadeEntityList;
 }

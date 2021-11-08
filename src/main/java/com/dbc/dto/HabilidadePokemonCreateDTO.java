@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -12,5 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 public class HabilidadePokemonCreateDTO {
     @ApiModelProperty("Lista de Habilidades")
-    private List<HabilidadeDTO> habilidadeDTOList;
+    @NotNull
+    private List<Integer> idHabilidadeDTOList;
 }
