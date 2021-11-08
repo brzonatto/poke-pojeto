@@ -32,27 +32,32 @@ public class PokeDadosService {
         for (PokemonEntity key : pokemonRepository.list()) {
             pokeDadosDTOList.add(new PokeDadosDTO());
             pokeDadosDTOList.get(index).setPokemon(objectMapper.convertValue(key, PokemonCreateDTO.class));
-            TipoPokemonDTO tipoPokemonDTO = objectMapper.convertValue(tipoPokemonRepository.getTipoByPokemon(key.getIdPokemon()), TipoPokemonDTO.class);
-            tipoPokemonDTO.setIdPokemon(key.getIdPokemon());
-            pokeDadosDTOList.get(index).setTipos(objectMapper.convertValue(tipoPokemonDTO, TipoPokemonCreateDTO.class));
-
-            HabilidadePokemonEntity habilidadePokemonEntity = habilidadePokemonRepository.getHabilidadeByPokemon(key.getIdPokemon());
-            HabilidadePokemonDTO habilidadePokemonDTO = new HabilidadePokemonDTO();
-            habilidadePokemonDTO.setIdPokemon(habilidadePokemonEntity.getPokemon().getIdPokemon());
-            habilidadePokemonDTO.setIdHabilidadePokemon(habilidadePokemonEntity.getIdHabilidadePokemon());
-            List<HabilidadeDTO> habilidadeDTOList = habilidadePokemonEntity.getHabilidadeEntityList().stream()
-                    .map(habilidade -> objectMapper.convertValue(habilidade, HabilidadeDTO.class))
-                    .collect(Collectors.toList());
-            habilidadePokemonDTO.setHabilidadeDTOList(habilidadeDTOList);
-            pokeDadosDTOList.get(index).setHabilidades(habilidadePokemonDTO);
-            EvolucaoDTO evolucaoDTO = objectMapper.convertValue(evolucaoRepository.getEvolucaoByPokemon(key.getIdPokemon()), EvolucaoDTO.class);
-            EvolucaoNomesDTO evolucaoNomesDTO = new EvolucaoNomesDTO();
-            evolucaoNomesDTO.setEstagioUm(evolucaoDTO.getEstagioUm().getNome());
-            evolucaoNomesDTO.setEstagioDois(evolucaoDTO.getEstagioDois().getNome());
-            if (evolucaoDTO.getEstagioTres() != null) {
-                evolucaoNomesDTO.setEstagioTres(evolucaoDTO.getEstagioTres().getNome());
+            if (tipoPokemonRepository.existTipoByPokemon(key.getIdPokemon())) {
+                TipoPokemonDTO tipoPokemonDTO = objectMapper.convertValue(tipoPokemonRepository.getTipoByPokemon(key.getIdPokemon()), TipoPokemonDTO.class);
+                tipoPokemonDTO.setIdPokemon(key.getIdPokemon());
+                pokeDadosDTOList.get(index).setTipos(objectMapper.convertValue(tipoPokemonDTO, TipoPokemonCreateDTO.class));
             }
-            pokeDadosDTOList.get(index).setEvolucao(evolucaoNomesDTO);
+            if (habilidadePokemonRepository.existHabilidadeByPokemon(key.getIdPokemon())) {
+                HabilidadePokemonEntity habilidadePokemonEntity = habilidadePokemonRepository.getHabilidadeByPokemon(key.getIdPokemon());
+                HabilidadePokemonDTO habilidadePokemonDTO = new HabilidadePokemonDTO();
+                habilidadePokemonDTO.setIdPokemon(habilidadePokemonEntity.getPokemon().getIdPokemon());
+                habilidadePokemonDTO.setIdHabilidadePokemon(habilidadePokemonEntity.getIdHabilidadePokemon());
+                List<HabilidadeDTO> habilidadeDTOList = habilidadePokemonEntity.getHabilidadeEntityList().stream()
+                        .map(habilidade -> objectMapper.convertValue(habilidade, HabilidadeDTO.class))
+                        .collect(Collectors.toList());
+                habilidadePokemonDTO.setHabilidadeDTOList(habilidadeDTOList);
+                pokeDadosDTOList.get(index).setHabilidades(habilidadePokemonDTO);
+            }
+            if (evolucaoRepository.existEvolucaoByPokemon(key.getIdPokemon())) {
+                EvolucaoDTO evolucaoDTO = objectMapper.convertValue(evolucaoRepository.getEvolucaoByPokemon(key.getIdPokemon()), EvolucaoDTO.class);
+                EvolucaoNomesDTO evolucaoNomesDTO = new EvolucaoNomesDTO();
+                evolucaoNomesDTO.setEstagioUm(evolucaoDTO.getEstagioUm().getNome());
+                evolucaoNomesDTO.setEstagioDois(evolucaoDTO.getEstagioDois().getNome());
+                if (evolucaoDTO.getEstagioTres() != null) {
+                    evolucaoNomesDTO.setEstagioTres(evolucaoDTO.getEstagioTres().getNome());
+                }
+                pokeDadosDTOList.get(index).setEvolucao(evolucaoNomesDTO);
+            }
             index++;
         }
         return pokeDadosDTOList;
