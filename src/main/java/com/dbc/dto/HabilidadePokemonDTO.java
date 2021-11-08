@@ -12,5 +12,5 @@ import java.util.List;
 public class HabilidadePokemonDTO {
     private Integer idHabilidadePokemon;
     private Integer idPokemon;
-    private List<HabilidadeDTO> habilidadeEntityList;
+    private List<HabilidadeDTO> habilidadeDTOListList;
 }

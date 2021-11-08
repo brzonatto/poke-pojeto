@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PokeDadosDTO {
-    private PokemonDTO pokemonDTO;
-    private TipoPokemonDTO tipoPokemonDTO;
-    private HabilidadePokemonDTO habilidadePokemonDTO;
-    private EvolucaoDTO evolucaoDTO;
+    private PokemonCreateDTO pokemon;
+    private TipoPokemonCreateDTO tipo;
+//    private HabilidadePokemonDTO habilidade;
+    private EvolucaoNomesDTO evolucao;
 }

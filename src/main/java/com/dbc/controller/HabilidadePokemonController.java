@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Validated
-@RequestMapping("/habilidadepokemon")
+@RequestMapping("/habilidade/pokemon")
 public class HabilidadePokemonController {
 
     private final HabilidadePokemonService habilidadePokemonService;

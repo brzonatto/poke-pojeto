@@ -10,5 +10,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HabilidadePokemonCreateDTO {
-    private List<HabilidadeDTO> habilidadeEntityList;
+    private List<HabilidadeDTO> habilidadeDTOList;
 }

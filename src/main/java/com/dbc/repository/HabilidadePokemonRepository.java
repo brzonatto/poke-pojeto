@@ -48,6 +48,11 @@ public class HabilidadePokemonRepository {
     }
 
 
-
+    public HabilidadePokemonEntity getHabilidadeByPokemon(Integer idPokemon) throws RegraDeNegocioException {
+        return listaHabilidades.stream()
+                .filter(habilidade -> habilidade.getPokemonEntity().getIdPokemon().equals(idPokemon))
+                .findFirst()
+                .orElseThrow(() -> new RegraDeNegocioException("Habilidade não encontrada"));
+    }
 
 }
