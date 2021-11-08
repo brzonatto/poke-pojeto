@@ -1,10 +1,12 @@
 package com.dbc.service;
 
+import com.dbc.dto.HabilidadePokemonDTO;
 import com.dbc.dto.PokemonCreateDTO;
 import com.dbc.dto.PokemonDTO;
 import com.dbc.entity.PokemonEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.repository.EvolucaoRepository;
+import com.dbc.repository.HabilidadePokemonRepository;
 import com.dbc.repository.PokemonRepository;
 import com.dbc.repository.TipoPokemonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +22,7 @@ public class PokemonService {
     private final PokemonRepository pokemonRepository;
     private final TipoPokemonRepository tipoPokemonRepository;
     private final EvolucaoRepository evolucaoRepository;
+    private final HabilidadePokemonRepository habilidadePokemonRepository;
     private final ObjectMapper objectMapper;
 
     public PokemonDTO create(PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException {
@@ -54,6 +57,9 @@ public class PokemonService {
         }
         if (evolucaoRepository.existEvolucaoByPokemon(idPokemon)) {
             evolucaoRepository.delete(evolucaoRepository.getEvolucaoByPokemon(idPokemon).getIdEvolucao());
+        }
+        if (habilidadePokemonRepository.existHabilidadeByPokemon(idPokemon)) {
+            habilidadePokemonRepository.delete(habilidadePokemonRepository.getHabilidadeByPokemon(idPokemon).getIdHabilidadePokemon());
         }
         pokemonRepository.delete(idPokemon);
     }

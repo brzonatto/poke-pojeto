@@ -25,7 +25,7 @@ public class TipoPokemonController {
     private final TipoPokemonService tipoPokemonService;
 
     @ApiOperation("Adicionar tipo ao Pokémon")
-    @PostMapping("/{idTipo}")
+    @PostMapping("/{idPokemon}")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Tipo criado com sucesso!"),
             @ApiResponse(code = 400, message = "Tipo com dados inconsistentes"),

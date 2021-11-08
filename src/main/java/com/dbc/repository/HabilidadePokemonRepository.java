@@ -49,6 +49,9 @@ public class HabilidadePokemonRepository {
         listaHabilidades.remove(habilidadeRecuperada);
     }
 
+    public Boolean existHabilidadeByPokemon(Integer idPokemon) {
+        return listaHabilidades.stream().anyMatch(habilidade -> habilidade.getPokemon().getIdPokemon().equals(idPokemon));
+    }
 
     public HabilidadePokemonEntity getHabilidadeByPokemon(Integer idPokemon) throws RegraDeNegocioException {
         return listaHabilidades.stream()
