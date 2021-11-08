@@ -24,7 +24,7 @@ import java.util.List;
 public class PokemonController {
     private final PokemonService pokemonService;
 
-    @ApiOperation("Adicionando Pokémon")
+    @ApiOperation("Adicionar Pokémon")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Pokémon criado com sucesso!"),
             @ApiResponse(code = 400, message = "Pokémon com dados inconsistentes"),
@@ -36,12 +36,12 @@ public class PokemonController {
         return pokemonCriado;
     }
 
-    @ApiOperation("Listando Pokémon")
+    @ApiOperation("Listar Pokémon")
     @GetMapping
     public List<PokemonDTO> list(){return pokemonService.list();}
 
 
-    @ApiOperation("Editando Pokémon")
+    @ApiOperation("Editar Pokémon")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Pokémon editado com sucesso!"),
             @ApiResponse(code = 400, message = "Pokémon não encontrado"),
@@ -54,7 +54,7 @@ public class PokemonController {
         return pokemonEditado;
     }
 
-    @ApiOperation("Excluindo Pokémon")
+    @ApiOperation("Excluir Pokémon")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Pokémon excluído com sucesso!"),
             @ApiResponse(code = 400, message = "Pokémon não encontrado"),

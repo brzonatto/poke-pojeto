@@ -61,7 +61,7 @@ public class TipoPokemonRepository {
                         tipoPokemonEntityList.getTipo().get(1).toString().equals(tipo))
                 .collect(Collectors.toList());
 
-        listaRetorno = listaTipo.stream().map(pokemonEntity -> pokemonEntity.getPokemon()).collect(Collectors.toList());
+        listaRetorno = listaTipo.stream().map(TipoPokemonEntity::getPokemon).collect(Collectors.toList());
         return listaRetorno;
     }
 }

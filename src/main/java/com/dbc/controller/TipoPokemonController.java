@@ -5,6 +5,7 @@ import com.dbc.dto.TipoPokemonCreateDTO;
 import com.dbc.dto.TipoPokemonDTO;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.service.TipoPokemonService;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,8 @@ import java.util.List;
 public class TipoPokemonController {
     private final TipoPokemonService tipoPokemonService;
 
-    @PostMapping("/{idPokemon}")
+    @ApiOperation("Adicionar tipo ao Pokémon")
+    @PostMapping("/{idTipo}")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Tipo criado com sucesso!"),
             @ApiResponse(code = 400, message = "Tipo com dados inconsistentes"),
@@ -34,11 +36,13 @@ public class TipoPokemonController {
         return tipoPokemonDTOCriado;
     }
 
+    @ApiOperation("Listar os tipos do Pokémon")
     @GetMapping
     public List<TipoPokemonDTO> list() {
         return tipoPokemonService.list();
     }
 
+    @ApiOperation("Editar tipos do Pokémon")
     @PutMapping("/{idTipo}")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Tipo editado com sucesso!"),
@@ -49,6 +53,7 @@ public class TipoPokemonController {
         return tipoPokemonService.update(idTipo, tipoPokemonCreateDTO);
     }
 
+    @ApiOperation("Excluir tipo do Pokémon")
     @DeleteMapping("/{idTipo}")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Tipo excluído com sucesso!"),
@@ -59,6 +64,7 @@ public class TipoPokemonController {
         tipoPokemonService.delete(idTipo);
     }
 
+    @ApiOperation("Listar todos pokémon de um tipo")
     @GetMapping("/listarportipo/{tipo}")
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = "Tipo não encontrado"),

@@ -4,6 +4,7 @@ import com.dbc.dto.EvolucaoCreateDTO;
 import com.dbc.dto.EvolucaoDTO;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.service.EvolucaoService;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ import java.util.List;
 public class EvolucaoController {
     private final EvolucaoService evolucaoService;
 
-
+    @ApiOperation("Criar Evolução")
     @PostMapping
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Evolução criada com sucesso!"),
@@ -34,11 +35,13 @@ public class EvolucaoController {
         return evolucaoDTOCriado;
     }
 
+    @ApiOperation("Listar Evoluções")
     @GetMapping
     public List<EvolucaoDTO> list() {
         return evolucaoService.list();
     }
 
+    @ApiOperation("Editar Evolução")
     @PutMapping("/{idEvolucao}")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Evolução editada com sucesso!"),
@@ -49,6 +52,7 @@ public class EvolucaoController {
         return evolucaoService.update(idEvolucao, evolucaoCreateDTO);
     }
 
+    @ApiOperation("Excluir Evolução")
     @DeleteMapping("/{idEvolucao}")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Evolução excluída com sucesso!"),

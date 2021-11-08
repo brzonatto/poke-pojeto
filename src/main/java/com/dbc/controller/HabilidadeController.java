@@ -24,7 +24,7 @@ public class HabilidadeController {
 
     private final HabilidadeService habilidadeService;
 
-    @ApiOperation("Adicionando Habilidade")
+    @ApiOperation("Adicionar Habilidade")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Habilidade criada com sucesso!"),
             @ApiResponse(code = 400, message = "Habilidade com dados inconsistentes"),
@@ -36,12 +36,12 @@ public class HabilidadeController {
         return habilidadeCriada;
     }
 
-    @ApiOperation("Listando Habilidade")
+    @ApiOperation("Listar Habilidade")
     @GetMapping
     public List<HabilidadeDTO> list(){return habilidadeService.list();}
 
 
-    @ApiOperation("Editando Habilidade")
+    @ApiOperation("Editar Habilidade")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Habilidade editada com sucesso!"),
             @ApiResponse(code = 400, message = "Habilidade não encontrada"),
@@ -55,7 +55,7 @@ public class HabilidadeController {
     }
 
 
-    @ApiOperation("Excluindo Habilidade")
+    @ApiOperation("Excluir Habilidade")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Habilidade excluída com sucesso!"),
             @ApiResponse(code = 400, message = "Habilidade não encontrada"),

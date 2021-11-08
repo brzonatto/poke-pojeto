@@ -3,8 +3,10 @@ package com.dbc.service;
 import com.dbc.dto.HabilidadeDTO;
 import com.dbc.dto.HabilidadePokemonCreateDTO;
 import com.dbc.dto.HabilidadePokemonDTO;
+import com.dbc.dto.PokemonDTO;
 import com.dbc.entity.HabilidadeEntity;
 import com.dbc.entity.HabilidadePokemonEntity;
+import com.dbc.enums.Tipo;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.repository.HabilidadePokemonRepository;
 import com.dbc.repository.HabilidadeRepository;
@@ -78,5 +80,13 @@ public class HabilidadePokemonService {
 
     public void delete(Integer idHabilidade) throws RegraDeNegocioException {
         habilidadePokemonRepository.delete(idHabilidade);
+    }
+
+    public List<PokemonDTO> listarPorHabilidade(String habilidade){
+        return habilidadePokemonRepository.listarPorHabilidade(habilidade).stream()
+                .map(pokemon-> {
+                    return objectMapper.convertValue(pokemon, PokemonDTO.class);
+                })
+                .collect(Collectors.toList());
     }
 }

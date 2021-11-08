@@ -24,7 +24,7 @@ public class HabilidadePokemonController {
 
     private final HabilidadePokemonService habilidadePokemonService;
 
-    @ApiOperation("Adicionando Habilidade")
+    @ApiOperation("Adicionar Habilidade")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Habilidade criada com sucesso!"),
             @ApiResponse(code = 400, message = "Habilidade com dados inconsistentes"),
@@ -38,14 +38,14 @@ public class HabilidadePokemonController {
         return habilidadeCriada;
     }
 
-    @ApiOperation("Listando Habilidade")
+    @ApiOperation("Listar Habilidade")
     @GetMapping
     public List<HabilidadePokemonDTO> list() {
         return habilidadePokemonService.list();
     }
 
 
-    @ApiOperation("Editando Habilidade")
+    @ApiOperation("Editar Habilidade")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Habilidade editada com sucesso!"),
             @ApiResponse(code = 400, message = "Habilidade não encontrada"),
@@ -60,7 +60,7 @@ public class HabilidadePokemonController {
         return habilidadeEditada;
     }
 
-    @ApiOperation("Excluindo Habilidade")
+    @ApiOperation("Excluir Habilidade")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Habilidade excluída com sucesso!"),
             @ApiResponse(code = 400, message = "Habilidade não encontrada"),
@@ -69,5 +69,15 @@ public class HabilidadePokemonController {
     @DeleteMapping("/{idHabilidade}")
     public void delete(@PathVariable("idHabilidade") Integer idHabilidade) throws RegraDeNegocioException {
         habilidadePokemonService.delete(idHabilidade);
+    }
+
+    @ApiOperation("Listar por Habilidade")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Tipo não encontrado"),
+            @ApiResponse(code = 500, message = "Excessão no sistema")
+    })
+    @GetMapping("/listarporhabilidade/{habilidade}")
+    public List<PokemonDTO> listarPorTipo(@PathVariable("habilidade") String habilidade){
+        return habilidadePokemonService.listarPorHabilidade(habilidade);
     }
 }
