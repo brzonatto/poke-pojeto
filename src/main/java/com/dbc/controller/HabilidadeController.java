@@ -31,14 +31,16 @@ public class HabilidadeController {
             @ApiResponse(code = 500, message = "Exceção no sistema")
     })
     @PostMapping
-    public HabilidadeDTO create (@RequestBody @Valid HabilidadeCreateDTO habilidadeCreateDTO){
+    public HabilidadeDTO create(@RequestBody @Valid HabilidadeCreateDTO habilidadeCreateDTO) {
         HabilidadeDTO habilidadeCriada = habilidadeService.create(habilidadeCreateDTO);
         return habilidadeCriada;
     }
 
     @ApiOperation("Listar Habilidade")
     @GetMapping
-    public List<HabilidadeDTO> list(){return habilidadeService.list();}
+    public List<HabilidadeDTO> list() {
+        return habilidadeService.list();
+    }
 
 
     @ApiOperation("Editar Habilidade")
@@ -62,13 +64,7 @@ public class HabilidadeController {
             @ApiResponse(code = 500, message = "Exceção no sistema")
     })
     @DeleteMapping("/{idHabilidade}")
-    public void delete(@PathVariable("idHabilidade") Integer idHabilidade) throws RegraDeNegocioException{
+    public void delete(@PathVariable("idHabilidade") Integer idHabilidade) throws RegraDeNegocioException {
         habilidadeService.delete(idHabilidade);
     }
-
-//    @ApiOperation("Listando por Habilidade")
-//    @GetMapping("listarporhabilidade/{habilidade}")
-//    public List<PokemonDTO> listarPokemonHabilidade(@PathVariable("habilidade") String habilidade){
-//        return habilidadeService.listarPorHabilidade(habilidade);
-//    }
 }
