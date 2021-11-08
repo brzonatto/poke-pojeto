@@ -1,6 +1,5 @@
 package com.dbc.service;
 
-import com.dbc.dto.HabilidadePokemonDTO;
 import com.dbc.dto.PokemonCreateDTO;
 import com.dbc.dto.PokemonDTO;
 import com.dbc.entity.PokemonEntity;

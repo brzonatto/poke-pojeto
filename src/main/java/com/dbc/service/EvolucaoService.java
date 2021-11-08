@@ -53,7 +53,6 @@ public class EvolucaoService {
     }
 
     public EvolucaoDTO update(Integer idEvolucao, EvolucaoCreateDTO evolucaoCreateDTO) throws RegraDeNegocioException {
-
         EvolucaoEntity evolucaoBackup = evolucaoRepository.getEvolucaoById(idEvolucao);
         EvolucaoEntity oi = new EvolucaoEntity();
         oi.setIdEvolucao(evolucaoBackup.getIdEvolucao());
