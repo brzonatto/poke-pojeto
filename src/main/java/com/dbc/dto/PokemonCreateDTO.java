@@ -1,5 +1,6 @@
 package com.dbc.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,28 +16,36 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class PokemonCreateDTO {
     @NotNull
+    @ApiModelProperty("Número do Pokémon na pokédex")
     private Integer numero;
 
     @NotEmpty
     @NotBlank
+    @ApiModelProperty("Nome do Pokémon")
     private String nome;
 
     @NotNull
     @Min(1)
+    @ApiModelProperty("Level do Pokémon")
     private Integer level;
 
     @NotNull
+    @ApiModelProperty("Peso do Pokémon")
     private Double peso;
 
     @NotNull
+    @ApiModelProperty("Altura do Pokémon")
     private Double altura;
 
     @NotEmpty
     @NotBlank
+    @ApiModelProperty("Categoria do Pokémon")
     private String categoria;
 
+    @ApiModelProperty("Região dominante do Pokémon, caso for lendário")
     private String regiaoDominante;
 
     @NotNull
+    @ApiModelProperty("Status do Pokémon")
     private StatusDTO status;
 }
