@@ -1,6 +1,5 @@
 package com.dbc.repository;
 
-import com.dbc.entity.HabilidadeEntity;
 import com.dbc.entity.HabilidadePokemonEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
 import org.springframework.stereotype.Repository;

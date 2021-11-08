@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PokeDadosDTO {
     private PokemonCreateDTO pokemon;
-    private TipoPokemonCreateDTO tipo;
-//    private HabilidadePokemonDTO habilidade;
+    private TipoPokemonCreateDTO tipos;
+    private HabilidadePokemonDTO habilidades;
     private EvolucaoNomesDTO evolucao;
 }
