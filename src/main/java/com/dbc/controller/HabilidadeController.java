@@ -2,10 +2,11 @@ package com.dbc.controller;
 
 import com.dbc.dto.HabilidadeCreateDTO;
 import com.dbc.dto.HabilidadeDTO;
-import com.dbc.dto.PokemonDTO;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.service.HabilidadeService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +25,11 @@ public class HabilidadeController {
     private final HabilidadeService habilidadeService;
 
     @ApiOperation("Adicionando Habilidade")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Habilidade criada com sucesso!"),
+            @ApiResponse(code = 400, message = "Habilidade com dados inconsistentes"),
+            @ApiResponse(code = 500, message = "Exceção no sistema")
+    })
     @PostMapping
     public HabilidadeDTO create (@RequestBody @Valid HabilidadeCreateDTO habilidadeCreateDTO){
         HabilidadeDTO habilidadeCriada = habilidadeService.create(habilidadeCreateDTO);
@@ -36,6 +42,11 @@ public class HabilidadeController {
 
 
     @ApiOperation("Editando Habilidade")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Habilidade editada com sucesso!"),
+            @ApiResponse(code = 400, message = "Habilidade não encontrada"),
+            @ApiResponse(code = 500, message = "Exceção no sistema")
+    })
     @PutMapping("/{idHabilidade}")
     public HabilidadeDTO update(@PathVariable("idHabilidade") Integer idHabilidade,
                                 @Valid @RequestBody HabilidadeCreateDTO habilidadeCreateDTO) throws RegraDeNegocioException {
@@ -43,7 +54,13 @@ public class HabilidadeController {
         return habilidadeEditada;
     }
 
+
     @ApiOperation("Excluindo Habilidade")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Habilidade excluída com sucesso!"),
+            @ApiResponse(code = 400, message = "Habilidade não encontrada"),
+            @ApiResponse(code = 500, message = "Exceção no sistema")
+    })
     @DeleteMapping("/{idHabilidade}")
     public void delete(@PathVariable("idHabilidade") Integer idHabilidade) throws RegraDeNegocioException{
         habilidadeService.delete(idHabilidade);

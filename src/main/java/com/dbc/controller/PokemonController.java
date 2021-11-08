@@ -5,6 +5,8 @@ import com.dbc.dto.PokemonDTO;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.service.PokemonService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +25,11 @@ public class PokemonController {
     private final PokemonService pokemonService;
 
     @ApiOperation("Adicionando Pokémon")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Pokémon criado com sucesso!"),
+            @ApiResponse(code = 400, message = "Pokémon com dados inconsistentes"),
+            @ApiResponse(code = 500, message = "Exceção no sistema")
+    })
     @PostMapping
     public PokemonDTO create (@RequestBody @Valid PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException {
         PokemonDTO pokemonCriado = pokemonService.create(pokemonCreateDTO);
@@ -35,6 +42,11 @@ public class PokemonController {
 
 
     @ApiOperation("Editando Pokémon")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Pokémon editado com sucesso!"),
+            @ApiResponse(code = 400, message = "Pokémon não encontrado"),
+            @ApiResponse(code = 500, message = "Exceção no sistema")
+    })
     @PutMapping("/{idPokemon}")
     public PokemonDTO update(@PathVariable("idPokemon") Integer id,
                              @Valid @RequestBody PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException{
@@ -43,6 +55,11 @@ public class PokemonController {
     }
 
     @ApiOperation("Excluindo Pokémon")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Pokémon excluído com sucesso!"),
+            @ApiResponse(code = 400, message = "Pokémon não encontrado"),
+            @ApiResponse(code = 500, message = "Exceção no sistema")
+    })
     @DeleteMapping("/{idPokemon}")
     public void delete(@PathVariable("idPokemon") Integer id) throws RegraDeNegocioException{
         pokemonService.delete(id);
