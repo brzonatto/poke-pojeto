@@ -30,7 +30,7 @@ public class HabilidadePokemonService {
     public HabilidadePokemonDTO create(Integer idPokemon, HabilidadePokemonCreateDTO habilidadePokemonCreateDTO) throws RegraDeNegocioException {
         HabilidadePokemonEntity habilidadePokemonEntity = objectMapper
                 .convertValue(habilidadePokemonCreateDTO, HabilidadePokemonEntity.class);
-        habilidadePokemonEntity.setPokemon(pokemonRepository.getPokemonById(idPokemon));
+        habilidadePokemonEntity.setPokemon(pokemonRepository.getById(idPokemon));
         List<HabilidadeEntity> habilidadeEntityList = new ArrayList<>();
         for (Integer key : habilidadePokemonCreateDTO.getIdHabilidadeDTOList()) {
             habilidadeEntityList.add(habilidadeRepository.getHabilidadeById(key));

@@ -31,7 +31,7 @@ public class PokemonController {
             @ApiResponse(code = 500, message = "Exceção no sistema")
     })
     @PostMapping
-    public PokemonDTO create (@RequestBody @Valid PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException {
+    public PokemonDTO create(@RequestBody @Valid PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException {
         PokemonDTO pokemonCriado = pokemonService.create(pokemonCreateDTO);
         return pokemonCriado;
     }

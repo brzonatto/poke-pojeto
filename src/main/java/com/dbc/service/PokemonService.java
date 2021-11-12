@@ -29,13 +29,13 @@ public class PokemonService {
             throw new RegraDeNegocioException("deve conter região dominate, pois o pokémon é lendário");
         }
         PokemonEntity pokemonEntity = objectMapper.convertValue(pokemonCreateDTO, PokemonEntity.class);
-        PokemonEntity pokemonCriado = pokemonRepository.create(pokemonEntity);
+        PokemonEntity pokemonCriado = pokemonRepository.save(pokemonEntity);
         PokemonDTO pokemonDTO = objectMapper.convertValue(pokemonCriado, PokemonDTO.class);
         return pokemonDTO;
     }
 
     public List<PokemonDTO> list() {
-        return pokemonRepository.list().stream()
+        return pokemonRepository.findAll().stream()
                 .map(pokemon -> objectMapper.convertValue(pokemon, PokemonDTO.class))
                 .collect(Collectors.toList());
     }
@@ -44,23 +44,25 @@ public class PokemonService {
         if (somaStatus(pokemonCreateDTO) >= 580 && pokemonCreateDTO.getRegiaoDominante() == null) {
             throw new RegraDeNegocioException("deve conter região dominate, pois o pokémon é lendário");
         }
+        pokemonRepository.findById(idPokemon).orElseThrow(() -> new RegraDeNegocioException("Pokémon não encontrado"));
         PokemonEntity pokemonEntity = objectMapper.convertValue(pokemonCreateDTO, PokemonEntity.class);
-        PokemonEntity pokemonAtualizado = pokemonRepository.update(idPokemon, pokemonEntity);
+        PokemonEntity pokemonAtualizado = pokemonRepository.save(pokemonEntity);
         PokemonDTO pokemonDTO = objectMapper.convertValue(pokemonAtualizado, PokemonDTO.class);
         return pokemonDTO;
     }
 
     public void delete(Integer idPokemon) throws RegraDeNegocioException {
-        if (tipoPokemonRepository.existTipoByPokemon(idPokemon)) {
-            tipoPokemonRepository.delete(tipoPokemonRepository.getTipoByPokemon(idPokemon).getIdTipoPokemon());
-        }
-        if (evolucaoRepository.existEvolucaoByPokemon(idPokemon)) {
-            evolucaoRepository.delete(evolucaoRepository.getEvolucaoByPokemon(idPokemon).getIdEvolucao());
-        }
-        if (habilidadePokemonRepository.existHabilidadeByPokemon(idPokemon)) {
-            habilidadePokemonRepository.delete(habilidadePokemonRepository.getHabilidadeByPokemon(idPokemon).getIdHabilidadePokemon());
-        }
-        pokemonRepository.delete(idPokemon);
+        PokemonEntity entity = pokemonRepository.getById(idPokemon);
+//        if (tipoPokemonRepository.existTipoByPokemon(idPokemon)) {
+//            tipoPokemonRepository.delete(tipoPokemonRepository.getTipoByPokemon(idPokemon).getIdTipoPokemon());
+//        }
+//        if (evolucaoRepository.existEvolucaoByPokemon(idPokemon)) {
+//            evolucaoRepository.delete(evolucaoRepository.getEvolucaoByPokemon(idPokemon).getIdEvolucao());
+//        }
+//        if (habilidadePokemonRepository.existHabilidadeByPokemon(idPokemon)) {
+//            habilidadePokemonRepository.delete(habilidadePokemonRepository.getHabilidadeByPokemon(idPokemon).getIdHabilidadePokemon());
+//        }
+        pokemonRepository.delete(entity);
     }
 
     public Boolean existPoke(Integer idPokemon) {

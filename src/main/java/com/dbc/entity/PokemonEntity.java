@@ -41,9 +41,6 @@ public class PokemonEntity {
     private StatusEntity status;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "pokemonEntity", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pokemon", fetch = FetchType.LAZY)
     private Set<TipoPokemonEntity> tipos;
-
-
-
 }

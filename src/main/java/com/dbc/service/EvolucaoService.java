@@ -32,13 +32,13 @@ public class EvolucaoService {
                 || evolucaoCreateDTO.getIdEstagioTres() == evolucaoCreateDTO.getIdEstagioUm()) {
             throw new RegraDeNegocioException("não deve conter Pokémons repetidos dentro de uma evolução");
         }
-        PokemonEntity estagioUm = pokemonRepository.getPokemonById(evolucaoCreateDTO.getIdEstagioUm());
-        PokemonEntity estagioDois = pokemonRepository.getPokemonById(evolucaoCreateDTO.getIdEstagioDois());
+        PokemonEntity estagioUm = pokemonRepository.getById(evolucaoCreateDTO.getIdEstagioUm());
+        PokemonEntity estagioDois = pokemonRepository.getById(evolucaoCreateDTO.getIdEstagioDois());
         EvolucaoEntity evolucaoEntity = objectMapper.convertValue(evolucaoCreateDTO, EvolucaoEntity.class);
         evolucaoEntity.setEstagioUm(estagioUm);
         evolucaoEntity.setEstagioDois(estagioDois);
         if (evolucaoCreateDTO.getIdEstagioTres() != null) {
-            PokemonEntity estagioTres = pokemonRepository.getPokemonById(evolucaoCreateDTO.getIdEstagioTres());
+            PokemonEntity estagioTres = pokemonRepository.getById(evolucaoCreateDTO.getIdEstagioTres());
             evolucaoEntity.setEstagioTres(estagioTres);
         }
         evolucaoRepository.create(evolucaoEntity);
@@ -73,10 +73,10 @@ public class EvolucaoService {
             throw new RegraDeNegocioException("não deve conter Pokémons repetidos dentro de uma evolução");
         }
         EvolucaoEntity entity = objectMapper.convertValue(evolucaoCreateDTO, EvolucaoEntity.class);
-        entity.setEstagioUm(pokemonRepository.getPokemonById(evolucaoCreateDTO.getIdEstagioUm()));
-        entity.setEstagioDois(pokemonRepository.getPokemonById(evolucaoCreateDTO.getIdEstagioDois()));
+        entity.setEstagioUm(pokemonRepository.getById(evolucaoCreateDTO.getIdEstagioUm()));
+        entity.setEstagioDois(pokemonRepository.getById(evolucaoCreateDTO.getIdEstagioDois()));
         if (evolucaoCreateDTO.getIdEstagioTres() != null) {
-            entity.setEstagioTres(pokemonRepository.getPokemonById(evolucaoCreateDTO.getIdEstagioTres()));
+            entity.setEstagioTres(pokemonRepository.getById(evolucaoCreateDTO.getIdEstagioTres()));
         }
         EvolucaoEntity update = evolucaoRepository.update(idEvolucao, entity);
         EvolucaoDTO evolucaoDTO = objectMapper.convertValue(update, EvolucaoDTO.class);

@@ -2,15 +2,14 @@ package com.dbc.entity;
 
 import com.dbc.enums.Tipo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "pokemon_tipo")
@@ -23,7 +22,7 @@ public class TipoPokemonEntity {
 
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_pokemon_id_pokemon", referencedColumnName = "id_pokemon")
     private PokemonEntity pokemon;
 
