@@ -63,6 +63,10 @@ public class PokemonService {
         pokemonRepository.delete(idPokemon);
     }
 
+    public Boolean existPoke(Integer idPokemon) {
+        return pokemonRepository.existsById(idPokemon);
+    }
+
     public Integer somaStatus(PokemonCreateDTO pokemonCreateDTO) {
         return pokemonCreateDTO.getStatus().getAtaque() + pokemonCreateDTO.getStatus().getHp()
                 + pokemonCreateDTO.getStatus().getDefesa() + pokemonCreateDTO.getStatus().getEspecialAtaque()

@@ -64,13 +64,13 @@ public class TipoPokemonController {
         tipoPokemonService.delete(idTipo);
     }
 
-    @ApiOperation("Listar todos pokémon de um tipo")
-    @GetMapping("/listarportipo/{tipo}")
-    @ApiResponses(value = {
-            @ApiResponse(code = 400, message = "Tipo não encontrado"),
-            @ApiResponse(code = 500, message = "Excessão no sistema")
-    })
-    public List<PokemonDTO> listarPorTipo(@PathVariable("tipo") String tipo){
-        return tipoPokemonService.listarPorTipo(tipo);
-    }
+//    @ApiOperation("Listar todos pokémon de um tipo")
+//    @GetMapping("/listarportipo/{tipo}")
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 400, message = "Tipo não encontrado"),
+//            @ApiResponse(code = 500, message = "Excessão no sistema")
+//    })
+//    public List<PokemonDTO> listarPorTipo(@PathVariable("tipo") String tipo){
+//        return tipoPokemonService.listarPorTipo(tipo);
+//    }
 }

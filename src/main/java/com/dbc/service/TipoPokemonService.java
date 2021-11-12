@@ -23,6 +23,17 @@ public class TipoPokemonService {
     private final PokemonRepository pokemonRepository;
     private final ObjectMapper objectMapper;
 
+    private TipoPokemonEntity findById(Integer id) throws RegraDeNegocioException {
+        TipoPokemonEntity entity = tipoPokemonRepository.findById(id)
+                .orElseThrow(() -> new RegraDeNegocioException("Tipo não encontrado"));
+        return entity;
+    }
+
+    public Boolean existPoke(Integer idPokemon) {
+        return pokemonRepository.existsById(idPokemon);
+    }
+
+
     public TipoPokemonDTO create(Integer idPokemon, TipoPokemonCreateDTO tipoPokemonCreateDTO) throws RegraDeNegocioException {
         if (existPoke(idPokemon)) {
             throw new RegraDeNegocioException("pokémon deve ser diferente, pois, já existe tipo cadastrado");
@@ -30,9 +41,9 @@ public class TipoPokemonService {
         if (existTipoRepetido(tipoPokemonCreateDTO.getTipo())) {
             throw new RegraDeNegocioException("não deve conter tipos repetidos");
         }
-        pokemonRepository.getPokemonById(idPokemon);
+        PokemonEntity entity = pokemonRepository.findById(idPokemon).orElseThrow(() -> new RegraDeNegocioException(""));
         TipoPokemonEntity tipoPokemonEntity = objectMapper.convertValue(tipoPokemonCreateDTO, TipoPokemonEntity.class);
-        tipoPokemonEntity.setPokemon(pokemonRepository.getPokemonById(idPokemon));
+        tipoPokemonEntity.setPokemon(entity);
         TipoPokemonEntity tipoPokemonEntityCriado = tipoPokemonRepository.save(tipoPokemonEntity);
         TipoPokemonDTO tipoPokemonDTO = objectMapper.convertValue(tipoPokemonEntityCriado, TipoPokemonDTO.class);
         tipoPokemonDTO.setIdPokemon(idPokemon);
@@ -40,7 +51,7 @@ public class TipoPokemonService {
     }
 
     public List<TipoPokemonDTO> list() {
-        return tipoPokemonRepository.list().stream()
+        return tipoPokemonRepository.findAll().stream()
                 .map(tipo -> {
                     TipoPokemonDTO tipoPokemonDTO = objectMapper.convertValue(tipo, TipoPokemonDTO.class);
                     tipoPokemonDTO.setIdPokemon(tipo.getPokemon().getIdPokemon());
@@ -50,19 +61,20 @@ public class TipoPokemonService {
     }
 
     public TipoPokemonDTO update(Integer idTipo, TipoPokemonCreateDTO tipoPokemonCreateDTO) throws RegraDeNegocioException {
+        findById(idTipo);
         TipoPokemonEntity entity = objectMapper.convertValue(tipoPokemonCreateDTO, TipoPokemonEntity.class);
-        TipoPokemonEntity update = tipoPokemonRepository.update(idTipo, entity);
+        entity.setIdTipoPokemon(idTipo);
+        TipoPokemonEntity update = tipoPokemonRepository.save(entity);
         TipoPokemonDTO tipoPokemonDTO = objectMapper.convertValue(update, TipoPokemonDTO.class);
         return tipoPokemonDTO;
     }
 
     public void delete(Integer idTipo) throws RegraDeNegocioException {
-        tipoPokemonRepository.delete(idTipo);
+        TipoPokemonEntity tipoPokemonEntity = findById(idTipo);
+        tipoPokemonRepository.delete(tipoPokemonEntity);
     }
 
-    public Boolean existPoke(Integer idPokemon) {
-        return list().stream().anyMatch(tipo -> tipo.getIdPokemon().equals(idPokemon));
-    }
+
 
     public Boolean existTipoRepetido(List<Tipo> tipoList) {
         List<Tipo> semRepetidos = tipoList.stream().distinct().collect(Collectors.toList());
@@ -72,11 +84,11 @@ public class TipoPokemonService {
         return false;
     }
 
-    public List<PokemonDTO> listarPorTipo(String tipo){
-        return tipoPokemonRepository.listarPorTipo(tipo).stream()
-                .map(pokemon-> {
-                    return objectMapper.convertValue(pokemon, PokemonDTO.class);
-                })
-                .collect(Collectors.toList());
-    }
+//    public List<PokemonDTO> listarPorTipo(String tipo){
+//        return tipoPokemonRepository.listarPorTipo(tipo).stream()
+//                .map(pokemon-> {
+//                    return objectMapper.convertValue(pokemon, PokemonDTO.class);
+//                })
+//                .collect(Collectors.toList());
+//    }
 }
