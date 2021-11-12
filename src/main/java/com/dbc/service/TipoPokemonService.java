@@ -33,7 +33,7 @@ public class TipoPokemonService {
         pokemonRepository.getPokemonById(idPokemon);
         TipoPokemonEntity tipoPokemonEntity = objectMapper.convertValue(tipoPokemonCreateDTO, TipoPokemonEntity.class);
         tipoPokemonEntity.setPokemon(pokemonRepository.getPokemonById(idPokemon));
-        TipoPokemonEntity tipoPokemonEntityCriado = tipoPokemonRepository.create(tipoPokemonEntity);
+        TipoPokemonEntity tipoPokemonEntityCriado = tipoPokemonRepository.save(tipoPokemonEntity);
         TipoPokemonDTO tipoPokemonDTO = objectMapper.convertValue(tipoPokemonEntityCriado, TipoPokemonDTO.class);
         tipoPokemonDTO.setIdPokemon(idPokemon);
         return tipoPokemonDTO;
