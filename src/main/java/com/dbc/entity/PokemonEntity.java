@@ -4,14 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Setter
 @Getter
 @Entity(name = "pokemon")
 public class PokemonEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_habilidade")
-    @SequenceGenerator(name = "seq_id_habilidade", sequenceName = "seq_id_habilidade", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_pokemon")
+    @SequenceGenerator(name = "seq_id_pokemon", sequenceName = "seq_id_pokemon", allocationSize = 1)
     @Column(name = "id_pokemon")
     private Integer idPokemon;
 
@@ -38,4 +39,11 @@ public class PokemonEntity {
 
     @Embedded
     private StatusEntity status;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "pokemonEntity", fetch = FetchType.LAZY)
+    private Set<TipoPokemonEntity> tipos;
+
+
+
 }
