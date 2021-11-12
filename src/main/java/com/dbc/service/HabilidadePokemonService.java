@@ -22,11 +22,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class HabilidadePokemonService {
-    private final HabilidadePokemonRepository habilidadePokemonRepository;
-    private final HabilidadeRepository habilidadeRepository;
-    private final PokemonRepository pokemonRepository;
-    private final ObjectMapper objectMapper;
-
+//    private final HabilidadePokemonRepository habilidadePokemonRepository;
+//    private final HabilidadeRepository habilidadeRepository;
+//    private final PokemonRepository pokemonRepository;
+//    private final ObjectMapper objectMapper;
+//
 //    public HabilidadePokemonDTO create(Integer idPokemon, HabilidadePokemonCreateDTO habilidadePokemonCreateDTO) throws RegraDeNegocioException {
 //        HabilidadePokemonEntity habilidadePokemonEntity = objectMapper
 //                .convertValue(habilidadePokemonCreateDTO, HabilidadePokemonEntity.class);

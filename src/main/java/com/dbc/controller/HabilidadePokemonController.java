@@ -21,7 +21,7 @@ import java.util.List;
 @Validated
 @RequestMapping("/habilidade/pokemon")
 public class HabilidadePokemonController {
-
+//
 //    private final HabilidadePokemonService habilidadePokemonService;
 //
 //    @ApiOperation("Adicionar Habilidade")

@@ -46,6 +46,7 @@ public class PokemonService {
         }
         pokemonRepository.findById(idPokemon).orElseThrow(() -> new RegraDeNegocioException("Pokémon não encontrado"));
         PokemonEntity pokemonEntity = objectMapper.convertValue(pokemonCreateDTO, PokemonEntity.class);
+        pokemonEntity.setIdPokemon(idPokemon);
         PokemonEntity pokemonAtualizado = pokemonRepository.save(pokemonEntity);
         PokemonDTO pokemonDTO = objectMapper.convertValue(pokemonAtualizado, PokemonDTO.class);
         return pokemonDTO;
