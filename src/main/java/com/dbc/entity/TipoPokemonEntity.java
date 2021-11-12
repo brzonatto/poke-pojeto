@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class TipoPokemonEntity {
     private Integer idTipoPokemon;
+
     private PokemonEntity pokemon;
     private List<Tipo> tipo;
 }

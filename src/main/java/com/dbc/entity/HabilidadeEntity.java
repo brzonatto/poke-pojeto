@@ -1,16 +1,24 @@
 package com.dbc.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import javax.persistence.*;
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity(name = "habilidade")
 public class HabilidadeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_habilidade")
+    @SequenceGenerator(name = "seq_id_habilidade", sequenceName = "seq_id_habilidade", allocationSize = 1)
+    @Column(name = "id_habilidade")
     private Integer idHabilidade;
-    private String nome;
-    private Double multiplicacaoDePoder;
 
+    @Column(name = "nome_habilidade")
+    private String nome;
+
+    @Column(name = "mult_de_poder_habilidade")
+    private Double multiplicacaoDePoder;
 }

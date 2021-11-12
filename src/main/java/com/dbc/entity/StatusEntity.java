@@ -1,19 +1,30 @@
 package com.dbc.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import java.io.Serializable;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class StatusEntity {
+@Setter
+@Getter
+@Embeddable
+public class StatusEntity implements Serializable {
+    @Column(name = "hp_status")
     private Integer hp;
+
+    @Column(name = "ataque_status")
     private Integer ataque;
+
+    @Column(name = "defesa_status")
     private Integer defesa;
+
+    @Column(name = "ataque_especial_status")
     private Integer especialAtaque;
+
+    @Column(name = "defesa_especial_status")
     private Integer especialDefesa;
+
+    @Column(name = "velocidade_status")
     private Integer velocidade;
 }
