@@ -14,5 +14,5 @@ import java.util.List;
 public class TipoPokemonCreateDTO {
 
     @ApiModelProperty("Lista de todos os tipos de Pokémon")
-    private List<Tipo> tipo;
+    private Tipo tipo;
 }

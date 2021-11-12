@@ -35,12 +35,12 @@ public class TipoPokemonService {
 
 
     public TipoPokemonDTO create(Integer idPokemon, TipoPokemonCreateDTO tipoPokemonCreateDTO) throws RegraDeNegocioException {
-        if (existPoke(idPokemon)) {
-            throw new RegraDeNegocioException("pokémon deve ser diferente, pois, já existe tipo cadastrado");
-        }
-        if (existTipoRepetido(tipoPokemonCreateDTO.getTipo())) {
-            throw new RegraDeNegocioException("não deve conter tipos repetidos");
-        }
+//        if (existPoke(idPokemon)) {
+//            throw new RegraDeNegocioException("pokémon deve ser diferente, pois, já existe tipo cadastrado");
+//        }
+//        if (existTipoRepetido(tipoPokemonCreateDTO.getTipo())) {
+//            throw new RegraDeNegocioException("não deve conter tipos repetidos");
+//        }
         PokemonEntity entity = pokemonRepository.findById(idPokemon).orElseThrow(() -> new RegraDeNegocioException(""));
         TipoPokemonEntity tipoPokemonEntity = objectMapper.convertValue(tipoPokemonCreateDTO, TipoPokemonEntity.class);
         tipoPokemonEntity.setPokemon(entity);

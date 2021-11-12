@@ -22,7 +22,7 @@ public class HabilidadeService {
 
     private HabilidadeEntity findById(Integer id) throws RegraDeNegocioException {
         HabilidadeEntity entity = habilidadeRepository.findById(id)
-                .orElseThrow(() -> new RegraDeNegocioException("Tipo não encontrado"));
+                .orElseThrow(() -> new RegraDeNegocioException("Não encontrado"));
         return entity;
     }
 

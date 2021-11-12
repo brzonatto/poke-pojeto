@@ -20,5 +20,5 @@ public class TipoPokemonDTO {
     private Integer idPokemon;
 
     @ApiModelProperty("Lista de tipos do Pokémon")
-    private List<Tipo> tipo;
+    private Tipo tipo;
 }
