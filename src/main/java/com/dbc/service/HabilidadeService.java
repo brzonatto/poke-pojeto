@@ -1,11 +1,9 @@
 package com.dbc.service;
 
-import com.dbc.dto.HabilidadeCreateDTO;
-import com.dbc.dto.HabilidadeDTO;
-import com.dbc.dto.PokemonCreateDTO;
-import com.dbc.dto.PokemonDTO;
+import com.dbc.dto.*;
 import com.dbc.entity.HabilidadeEntity;
 import com.dbc.entity.PokemonEntity;
+import com.dbc.entity.TipoPokemonEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.repository.HabilidadeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,27 +20,36 @@ public class HabilidadeService {
     private final HabilidadeRepository habilidadeRepository;
     private final ObjectMapper objectMapper;
 
+    private HabilidadeEntity findById(Integer id) throws RegraDeNegocioException {
+        HabilidadeEntity entity = habilidadeRepository.findById(id)
+                .orElseThrow(() -> new RegraDeNegocioException("Tipo não encontrado"));
+        return entity;
+    }
+
     public HabilidadeDTO create(HabilidadeCreateDTO habilidadeCreateDTO){
         HabilidadeEntity habilidadeEntity = objectMapper.convertValue(habilidadeCreateDTO, HabilidadeEntity.class);
-        HabilidadeEntity habilidadeCriada = habilidadeRepository.create(habilidadeEntity);
+        HabilidadeEntity habilidadeCriada = habilidadeRepository.save(habilidadeEntity);
         return objectMapper.convertValue(habilidadeCriada, HabilidadeDTO.class);
     }
 
     public List<HabilidadeDTO> list() {
-        return habilidadeRepository.list().stream()
+        return habilidadeRepository.findAll().stream()
                 .map(habilidade -> objectMapper.convertValue(habilidade, HabilidadeDTO.class))
                 .collect(Collectors.toList());
     }
 
     public HabilidadeDTO update(Integer idHabilidade, HabilidadeCreateDTO habilidadeCreateDTO) throws RegraDeNegocioException {
-        HabilidadeEntity habilidadeEntity = objectMapper.convertValue(habilidadeCreateDTO, HabilidadeEntity.class);
-        HabilidadeEntity habilidadeAtualizada = habilidadeRepository.update(idHabilidade, habilidadeEntity);
-        HabilidadeDTO habilidadeDTO = objectMapper.convertValue(habilidadeAtualizada, HabilidadeDTO.class);
+        findById(idHabilidade);
+        HabilidadeEntity entity = objectMapper.convertValue(habilidadeCreateDTO, HabilidadeEntity.class);
+        entity.setIdHabilidade(idHabilidade);
+        HabilidadeEntity update = habilidadeRepository.save(entity);
+        HabilidadeDTO habilidadeDTO = objectMapper.convertValue(update, HabilidadeDTO.class);
         return habilidadeDTO;
     }
 
     public void delete(Integer idHabilidade) throws RegraDeNegocioException{
-        habilidadeRepository.delete(idHabilidade);
+        HabilidadeEntity habilidadeEntity = findById(idHabilidade);
+        habilidadeRepository.delete(habilidadeEntity);
     }
 
 //    public List<PokemonDTO> listarPorHabilidade(String habilidade){
