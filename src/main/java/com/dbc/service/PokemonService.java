@@ -44,7 +44,7 @@ public class PokemonService {
                 .collect(Collectors.toList());
     }
 
-    public PokemonDTO update(Integer idPokemon, PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException { //TODO arrumar update erro 500
+    public PokemonDTO update(Integer idPokemon, PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException {
         if (somaStatus(pokemonCreateDTO) >= 580 && pokemonCreateDTO.getRegiaoDominante() == null) {
             throw new RegraDeNegocioException("deve conter região dominate, pois o pokémon é lendário");
         }
@@ -60,7 +60,7 @@ public class PokemonService {
         return dto;
     }
 
-    public void delete(Integer idPokemon) throws RegraDeNegocioException { //TODO arrumar delete erro 500
+    public void delete(Integer idPokemon) throws RegraDeNegocioException {
         PokemonEntity find = findById(idPokemon);
         pokemonRepository.delete(find);
 //        if (tipoPokemonRepository.existTipoByPokemon(idPokemon)) {
