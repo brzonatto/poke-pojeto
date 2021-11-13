@@ -52,11 +52,4 @@ public class HabilidadeService {
         habilidadeRepository.delete(habilidadeEntity);
     }
 
-//    public List<PokemonDTO> listarPorHabilidade(String habilidade){
-//        return habilidadeRepository.listarPorHabilidade(habilidade).stream()
-//                .map(pokemon -> {
-//                    return objectMapper.convertValue(pokemon, PokemonDTO.class);
-//                })
-//                .collect(Collectors.toList());
-//    }
 }

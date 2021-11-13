@@ -85,12 +85,4 @@ public class TipoPokemonService {
         }
         return false;
     }
-
-//    public List<PokemonDTO> listarPorTipo(String tipo){
-//        return tipoPokemonRepository.listarPorTipo(tipo).stream()
-//                .map(pokemon-> {
-//                    return objectMapper.convertValue(pokemon, PokemonDTO.class);
-//                })
-//                .collect(Collectors.toList());
-//    }
 }
