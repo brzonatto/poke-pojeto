@@ -4,6 +4,7 @@ import com.dbc.dto.*;
 import com.dbc.entity.EvolucaoEntity;
 import com.dbc.entity.HabilidadeEntity;
 import com.dbc.entity.PokemonEntity;
+import com.dbc.entity.TipoPokemonEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.repository.EvolucaoRepository;
 import com.dbc.repository.PokemonRepository;
@@ -69,25 +70,31 @@ public class EvolucaoService {
 //            evolucaoRepository.update(idEvolucao, oi);
 //            throw new RegraDeNegocioException("não deve conter Pokémons repetidos dentro de uma evolução");
 //        }
-        findById(idEvolucao);
+
+        EvolucaoEntity evolucaoEntity = findById(idEvolucao);
         EvolucaoEntity entity = objectMapper.convertValue(evolucaoCreateDTO, EvolucaoEntity.class);
         entity.setIdEvolucao(idEvolucao);
+
         entity.setEstagioUm(pokemonRepository.getById(evolucaoCreateDTO.getIdEstagioUm()));
         entity.setEstagioDois(pokemonRepository.getById(evolucaoCreateDTO.getIdEstagioDois()));
         if (evolucaoCreateDTO.getIdEstagioTres() != null) {
             entity.setEstagioTres(pokemonRepository.getById(evolucaoCreateDTO.getIdEstagioTres()));
         }
         EvolucaoEntity update = evolucaoRepository.save(entity);
-        return objectMapper.convertValue(update, EvolucaoDTO.class);
+        EvolucaoDTO evolucaoDTO = objectMapper.convertValue(update, EvolucaoDTO.class);
+        evolucaoDTO.setIdEvolucao(evolucaoEntity.getIdEvolucao());
+        return evolucaoDTO;
     }
 
-//    public HabilidadeDTO update(Integer idHabilidade, HabilidadeCreateDTO habilidadeCreateDTO) throws RegraDeNegocioException {
-//        findById(idHabilidade);
-//        HabilidadeEntity entity = objectMapper.convertValue(habilidadeCreateDTO, HabilidadeEntity.class);
-//        entity.setIdHabilidade(idHabilidade);
-//        HabilidadeEntity update = habilidadeRepository.save(entity);
-//        HabilidadeDTO habilidadeDTO = objectMapper.convertValue(update, HabilidadeDTO.class);
-//        return habilidadeDTO;
+//    public TipoPokemonDTO update(Integer idTipo, TipoPokemonCreateDTO tipoPokemonCreateDTO) throws RegraDeNegocioException {
+//        TipoPokemonEntity tipoPokemonEntity = findById(idTipo);
+//        TipoPokemonEntity entity = objectMapper.convertValue(tipoPokemonCreateDTO, TipoPokemonEntity.class);
+//        entity.setIdTipoPokemon(idTipo);
+//        entity.setPokemon(tipoPokemonEntity.getPokemon());
+//        TipoPokemonEntity update = tipoPokemonRepository.save(entity);
+//        TipoPokemonDTO tipoPokemonDTO = objectMapper.convertValue(update, TipoPokemonDTO.class);
+//        tipoPokemonDTO.setIdPokemon(tipoPokemonEntity.getPokemon().getIdPokemon());
+//        return tipoPokemonDTO;
 //    }
 
 
