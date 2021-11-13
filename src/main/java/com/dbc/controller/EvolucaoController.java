@@ -2,6 +2,7 @@ package com.dbc.controller;
 
 import com.dbc.dto.EvolucaoCreateDTO;
 import com.dbc.dto.EvolucaoDTO;
+import com.dbc.entity.PokemonEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.service.EvolucaoService;
 import io.swagger.annotations.ApiOperation;
@@ -62,4 +63,5 @@ public class EvolucaoController {
     public void delete(@PathVariable("idEvolucao") Integer idEvolucao) throws RegraDeNegocioException {
         evolucaoService.delete(idEvolucao);
     }
+
 }

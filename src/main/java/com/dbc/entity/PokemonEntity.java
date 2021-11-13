@@ -54,7 +54,8 @@ public class PokemonEntity {
 //            @JoinColumn(name="id_poke_estagio_3_evolucao", insertable=false, updatable=false)
 //    })
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToOne
     @JoinColumn(name = "fk_id_evolucao", referencedColumnName = "id_evolucao")
     private EvolucaoEntity evolucaoEntity;
 }

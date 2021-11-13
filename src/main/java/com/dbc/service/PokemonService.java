@@ -34,6 +34,10 @@ public class PokemonService {
         return pokemonDTO;
     }
 
+    public PokemonEntity getByID(Integer idPokemon) {
+        return pokemonRepository.findById(idPokemon).get();
+    }
+
     public List<PokemonDTO> list() {
         return pokemonRepository.findAll().stream()
                 .map(pokemon -> objectMapper.convertValue(pokemon, PokemonDTO.class))

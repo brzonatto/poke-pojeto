@@ -2,6 +2,7 @@ package com.dbc.controller;
 
 import com.dbc.dto.PokemonCreateDTO;
 import com.dbc.dto.PokemonDTO;
+import com.dbc.entity.PokemonEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.service.PokemonService;
 import io.swagger.annotations.ApiOperation;
@@ -66,7 +67,10 @@ public class PokemonController {
     }
 
 
-
+    @GetMapping("/pega-por-id")
+    public PokemonEntity pegarPorID(@RequestParam("idPokemon") Integer idPokemon) {
+        return pokemonService.getByID(idPokemon);
+    }
 
 
 

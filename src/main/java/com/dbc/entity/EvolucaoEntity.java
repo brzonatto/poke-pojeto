@@ -15,15 +15,17 @@ public class EvolucaoEntity{
     @Column(name = "id_evolucao")
     private Integer idEvolucao;
 
-
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_poke_estagio_1_evolucao", referencedColumnName = "id_pokemon")
     private PokemonEntity estagioUm;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_poke_estagio_2_evolucao", referencedColumnName = "id_pokemon")
     private PokemonEntity estagioDois;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_poke_estagio_3_evolucao", referencedColumnName = "id_pokemon")
     private PokemonEntity estagioTres; 
