@@ -23,6 +23,6 @@ public class HabilidadeEntity {
     private Double multiplicacaoDePoder;
 
 //    @JsonIgnore
-//    @ManyToMany(mappedBy = "habilidades", fetch = FetchType.LAZY)
-//    private Set<PokemonEntity> pokemons;
+    @ManyToMany(mappedBy = "habilidades", fetch = FetchType.LAZY)
+    private Set<PokemonEntity> pokemons;
 }

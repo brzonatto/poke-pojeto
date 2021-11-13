@@ -43,15 +43,15 @@ public class PokemonEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "pokemon", fetch = FetchType.LAZY)
     private Set<TipoPokemonEntity> tipos;
-//
+
 //    @JsonIgnore
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(
-//            name = "pokemon_habilidade",
-//            joinColumns = @JoinColumn(name = "id_pokemon"),
-//            inverseJoinColumns = @JoinColumn(name = "id_habilidade")
-//    )
-//    private Set<HabilidadeEntity> habilidades;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "pokemon_habilidade",
+            joinColumns = @JoinColumn(name = "fk_pokemon_id_pokemon"),
+            inverseJoinColumns = @JoinColumn(name = "fk_habilidade_id_habilidade")
+    )
+    private Set<HabilidadeEntity> habilidades;
 
 
 
