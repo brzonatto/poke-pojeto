@@ -10,8 +10,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity(name = "pokemon_tipo")
 public class TipoPokemonEntity {
     @Id

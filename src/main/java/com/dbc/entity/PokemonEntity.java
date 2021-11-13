@@ -44,8 +44,17 @@ public class PokemonEntity {
     @OneToMany(mappedBy = "pokemon", fetch = FetchType.LAZY)
     private Set<TipoPokemonEntity> tipos;
 
+
+
+//    @JsonIgnore
+//    @OneToOne(fetch=FetchType.LAZY)
+//    @JoinColumns({
+//            @JoinColumn(name="id_poke_estagio_1_evolucao", insertable=false, updatable=false),
+//            @JoinColumn(name="id_poke_estagio_2_evolucao", insertable=false, updatable=false),
+//            @JoinColumn(name="id_poke_estagio_3_evolucao", insertable=false, updatable=false)
+//    })
+
     @OneToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "fk_id_evolucao", referencedColumnName = "id_evolucao")
     private EvolucaoEntity evolucaoEntity;
 }

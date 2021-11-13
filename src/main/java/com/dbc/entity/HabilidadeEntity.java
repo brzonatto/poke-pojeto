@@ -6,8 +6,6 @@ import javax.persistence.*;
 
 @Setter
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity(name = "habilidade")
 public class HabilidadeEntity {
     @Id

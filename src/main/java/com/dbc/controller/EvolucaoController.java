@@ -30,7 +30,7 @@ public class EvolucaoController {
             @ApiResponse(code = 400, message = "Evolução com dados inconsistentes"),
             @ApiResponse(code = 500, message = "Excessão no sistema")
     })
-    public EvolucaoDTO create(@RequestBody @Valid EvolucaoCreateDTO evolucaoCreateDTO) throws RegraDeNegocioException {
+    public EvolucaoDTO create(@RequestBody @Valid EvolucaoCreateDTO evolucaoCreateDTO) {
         EvolucaoDTO evolucaoDTOCriado = evolucaoService.create(evolucaoCreateDTO);
         return evolucaoDTOCriado;
     }

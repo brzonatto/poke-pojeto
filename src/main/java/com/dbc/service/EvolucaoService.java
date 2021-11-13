@@ -30,7 +30,7 @@ public class EvolucaoService {
         return entity;
     }
 
-    public EvolucaoDTO create(EvolucaoCreateDTO evolucaoCreateDTO) throws RegraDeNegocioException {
+    public EvolucaoDTO create(EvolucaoCreateDTO evolucaoCreateDTO) {
 //        if (evolucaoRepository.existEvolucaoByPokemon(evolucaoCreateDTO.getIdEstagioUm())
 //                || evolucaoRepository.existEvolucaoByPokemon(evolucaoCreateDTO.getIdEstagioDois())
 //                || evolucaoRepository.existEvolucaoByPokemon(evolucaoCreateDTO.getIdEstagioTres())) {
@@ -41,16 +41,17 @@ public class EvolucaoService {
 //                || evolucaoCreateDTO.getIdEstagioTres() == evolucaoCreateDTO.getIdEstagioUm()) {
 //            throw new RegraDeNegocioException("não deve conter Pokémons repetidos dentro de uma evolução");
 //        }
-        PokemonEntity estagioUm = pokemonRepository.getById(evolucaoCreateDTO.getIdEstagioUm());
+        PokemonEntity pokemonEntity = new PokemonEntity();
+        pokemonEntity = pokemonRepository.getById(evolucaoCreateDTO.getIdEstagioUm());
         PokemonEntity estagioDois = pokemonRepository.getById(evolucaoCreateDTO.getIdEstagioDois());
         EvolucaoEntity evolucaoEntity = objectMapper.convertValue(evolucaoCreateDTO, EvolucaoEntity.class);
-        evolucaoEntity.setEstagioUm(estagioUm);
+        evolucaoEntity.setEstagioUm(pokemonEntity);
         evolucaoEntity.setEstagioDois(estagioDois);
         if (evolucaoCreateDTO.getIdEstagioTres() != null) {
             PokemonEntity estagioTres = pokemonRepository.getById(evolucaoCreateDTO.getIdEstagioTres());
             evolucaoEntity.setEstagioTres(estagioTres);
         }
-        evolucaoRepository.save(evolucaoEntity);
+        evolucaoEntity = evolucaoRepository.save(evolucaoEntity);
         EvolucaoDTO evolucaoDTO = objectMapper.convertValue(evolucaoEntity, EvolucaoDTO.class);
         return evolucaoDTO;
     }
