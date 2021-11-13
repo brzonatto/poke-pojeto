@@ -3,6 +3,7 @@ package com.dbc.controller;
 import com.dbc.dto.PokemonDTO;
 import com.dbc.dto.TipoPokemonCreateDTO;
 import com.dbc.dto.TipoPokemonDTO;
+import com.dbc.enums.Tipo;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.service.TipoPokemonService;
 import io.swagger.annotations.ApiOperation;
@@ -31,8 +32,8 @@ public class TipoPokemonController {
             @ApiResponse(code = 400, message = "Tipo com dados inconsistentes"),
             @ApiResponse(code = 500, message = "Excessão no sistema")
     })
-    public TipoPokemonDTO create(@PathVariable("idPokemon") Integer idPokemon, @RequestBody @Valid TipoPokemonCreateDTO tipoPokemonCreateDTO) throws RegraDeNegocioException {
-        TipoPokemonDTO tipoPokemonDTOCriado = tipoPokemonService.create(idPokemon, tipoPokemonCreateDTO);
+    public TipoPokemonDTO create(@PathVariable("idPokemon") Integer idPokemon, @RequestParam @Valid Tipo tipo) throws RegraDeNegocioException {
+        TipoPokemonDTO tipoPokemonDTOCriado = tipoPokemonService.create(idPokemon, tipo);
         return tipoPokemonDTOCriado;
     }
 

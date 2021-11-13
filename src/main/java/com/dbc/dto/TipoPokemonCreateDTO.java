@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TipoPokemonCreateDTO {
-
     @ApiModelProperty("Lista de todos os tipos de Pokémon")
     private Tipo tipo;
 }
