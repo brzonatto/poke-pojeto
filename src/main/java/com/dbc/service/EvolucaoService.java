@@ -28,12 +28,12 @@ public class EvolucaoService {
         return entity;
     }
 
-    public EvolucaoDTO create(EvolucaoCreateDTO evolucaoCreateDTO) {
+    public EvolucaoDTO create(EvolucaoCreateDTO evolucaoCreateDTO) { //TODO arrumar regra de negocio
         EvolucaoEntity evolucaoEntity = new EvolucaoEntity();
         evolucaoEntity.setEstagioUm(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioUm()).get());
-        evolucaoEntity.setEstagioDois(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioUm()).get());
+        evolucaoEntity.setEstagioDois(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioDois()).get());
         if (evolucaoCreateDTO.getIdEstagioTres() != null) {
-            evolucaoEntity.setEstagioTres(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioUm()).get());
+            evolucaoEntity.setEstagioTres(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioTres()).get());
         }
         evolucaoEntity = evolucaoRepository.save(evolucaoEntity);
         EvolucaoDTO evolucaoDTO = new EvolucaoDTO();
@@ -44,13 +44,13 @@ public class EvolucaoService {
         return evolucaoDTO;
     }
 
-    public List<EvolucaoDTO> list() {
+    public List<EvolucaoDTO> list() { //TODO setar pokemons
         return evolucaoRepository.findAll().stream()
                 .map(evolucao -> objectMapper.convertValue(evolucao, EvolucaoDTO.class))
                 .collect(Collectors.toList());
     }
 
-    public EvolucaoDTO update(Integer idEvolucao, EvolucaoCreateDTO evolucaoCreateDTO) throws RegraDeNegocioException {
+    public EvolucaoDTO update(Integer idEvolucao, EvolucaoCreateDTO evolucaoCreateDTO) throws RegraDeNegocioException { //TODO arrumar regra de negocio
 //        EvolucaoEntity evolucaoBackup = findById(idEvolucao);
 //        EvolucaoEntity oi = new EvolucaoEntity();
 //        oi.setIdEvolucao(evolucaoBackup.getIdEvolucao());

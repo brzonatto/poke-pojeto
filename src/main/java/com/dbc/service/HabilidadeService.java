@@ -26,7 +26,7 @@ public class HabilidadeService {
         return entity;
     }
 
-    public HabilidadeDTO create(HabilidadeCreateDTO habilidadeCreateDTO){
+    public HabilidadeDTO create(HabilidadeCreateDTO habilidadeCreateDTO){ //TODO arrumuar escala no banco de dados da variavel mult de poder
         HabilidadeEntity habilidadeEntity = objectMapper.convertValue(habilidadeCreateDTO, HabilidadeEntity.class);
         HabilidadeEntity habilidadeCriada = habilidadeRepository.save(habilidadeEntity);
         return objectMapper.convertValue(habilidadeCriada, HabilidadeDTO.class);
@@ -38,7 +38,7 @@ public class HabilidadeService {
                 .collect(Collectors.toList());
     }
 
-    public HabilidadeDTO update(Integer idHabilidade, HabilidadeCreateDTO habilidadeCreateDTO) throws RegraDeNegocioException {
+    public HabilidadeDTO update(Integer idHabilidade, HabilidadeCreateDTO habilidadeCreateDTO) throws RegraDeNegocioException { //TODO arrumuar escala no banco de dados da variavel mult de poder
         findById(idHabilidade);
         HabilidadeEntity entity = objectMapper.convertValue(habilidadeCreateDTO, HabilidadeEntity.class);
         entity.setIdHabilidade(idHabilidade);
