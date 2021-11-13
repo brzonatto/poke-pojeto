@@ -50,9 +50,8 @@ public class PokemonController {
     })
     @PutMapping("/{idPokemon}")
     public PokemonDTO update(@PathVariable("idPokemon") Integer id,
-                             @Valid @RequestBody PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException{
-        PokemonDTO pokemonEditado = pokemonService.update(id, pokemonCreateDTO);
-        return pokemonEditado;
+                             @RequestBody @Valid PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException{
+        return pokemonService.update(id, pokemonCreateDTO);
     }
 
     @ApiOperation("Excluir Pokémon")
@@ -62,7 +61,7 @@ public class PokemonController {
             @ApiResponse(code = 500, message = "Exceção no sistema")
     })
     @DeleteMapping("/{idPokemon}")
-    public void delete(@PathVariable("idPokemon") Integer id) throws RegraDeNegocioException{
+    public void delete(@PathVariable("idPokemon") Integer id) throws Exception {
         pokemonService.delete(id);
     }
 

@@ -48,16 +48,21 @@ public class PokemonService {
         if (somaStatus(pokemonCreateDTO) >= 580 && pokemonCreateDTO.getRegiaoDominante() == null) {
             throw new RegraDeNegocioException("deve conter região dominate, pois o pokémon é lendário");
         }
-        pokemonRepository.findById(idPokemon).orElseThrow(() -> new RegraDeNegocioException("Pokémon não encontrado"));
-        PokemonEntity pokemonEntity = objectMapper.convertValue(pokemonCreateDTO, PokemonEntity.class);
-        pokemonEntity.setIdPokemon(idPokemon);
-        PokemonEntity pokemonAtualizado = pokemonRepository.save(pokemonEntity);
-        PokemonDTO pokemonDTO = objectMapper.convertValue(pokemonAtualizado, PokemonDTO.class);
-        return pokemonDTO;
+        PokemonEntity find = findById(idPokemon);
+        find.setAltura(pokemonCreateDTO.getAltura());
+        find.setCategoria(pokemonCreateDTO.getCategoria());
+        find.setLevel(pokemonCreateDTO.getLevel());
+        find.setRegiaoDominante(pokemonCreateDTO.getRegiaoDominante());
+        find.setNumero(pokemonCreateDTO.getNumero());
+        find.setPeso(pokemonCreateDTO.getPeso());
+        PokemonEntity update = pokemonRepository.save(find);
+        PokemonDTO dto = objectMapper.convertValue(update,PokemonDTO.class);
+        return dto;
     }
 
     public void delete(Integer idPokemon) throws RegraDeNegocioException { //TODO arrumar delete erro 500
-        PokemonEntity entity = pokemonRepository.getById(idPokemon);
+        PokemonEntity find = findById(idPokemon);
+        pokemonRepository.delete(find);
 //        if (tipoPokemonRepository.existTipoByPokemon(idPokemon)) {
 //            tipoPokemonRepository.delete(tipoPokemonRepository.getTipoByPokemon(idPokemon).getIdTipoPokemon());
 //        }
@@ -67,7 +72,12 @@ public class PokemonService {
 //        if (habilidadePokemonRepository.existHabilidadeByPokemon(idPokemon)) {
 //            habilidadePokemonRepository.delete(habilidadePokemonRepository.getHabilidadeByPokemon(idPokemon).getIdHabilidadePokemon());
 //        }
-        pokemonRepository.delete(entity);
+    }
+
+    public PokemonEntity findById(Integer id) throws RegraDeNegocioException {
+        PokemonEntity entity = pokemonRepository.findById(id)
+                .orElseThrow(() -> new RegraDeNegocioException("pokemon não encontrado"));
+        return entity;
     }
 
     public Integer somaStatus(PokemonCreateDTO pokemonCreateDTO) {
