@@ -2,6 +2,8 @@ package com.dbc.controller;
 
 import com.dbc.dto.HabilidadeCreateDTO;
 import com.dbc.dto.HabilidadeDTO;
+import com.dbc.dto.PokemonHabilidadeCreateDTO;
+import com.dbc.dto.PokemonHabilidadeDTO;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.service.HabilidadeService;
 import io.swagger.annotations.ApiOperation;
@@ -63,6 +65,7 @@ public class HabilidadeController {
             @ApiResponse(code = 400, message = "Habilidade não encontrada"),
             @ApiResponse(code = 500, message = "Exceção no sistema")
     })
+
     @DeleteMapping("/{idHabilidade}")
     public void delete(@PathVariable("idHabilidade") Integer idHabilidade) throws RegraDeNegocioException {
         habilidadeService.delete(idHabilidade);

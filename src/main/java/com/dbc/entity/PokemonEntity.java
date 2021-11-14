@@ -41,11 +41,11 @@ public class PokemonEntity {
     private StatusEntity status;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "pokemon", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pokemon", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TipoPokemonEntity> tipos;
 
-//    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "pokemon_habilidade",
             joinColumns = @JoinColumn(name = "fk_pokemon_id_pokemon"),
@@ -53,18 +53,8 @@ public class PokemonEntity {
     )
     private Set<HabilidadeEntity> habilidades;
 
-
-
-//    @JsonIgnore
-//    @OneToOne(fetch=FetchType.LAZY)
-//    @JoinColumns({
-//            @JoinColumn(name="id_poke_estagio_1_evolucao", insertable=false, updatable=false),
-//            @JoinColumn(name="id_poke_estagio_2_evolucao", insertable=false, updatable=false),
-//            @JoinColumn(name="id_poke_estagio_3_evolucao", insertable=false, updatable=false)
-//    })
-
     @JsonIgnore
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "fk_id_evolucao", referencedColumnName = "id_evolucao")
     private EvolucaoEntity evolucaoEntity;
 }

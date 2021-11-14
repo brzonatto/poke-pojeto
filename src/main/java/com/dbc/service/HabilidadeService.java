@@ -6,6 +6,7 @@ import com.dbc.entity.PokemonEntity;
 import com.dbc.entity.TipoPokemonEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.repository.HabilidadeRepository;
+import com.dbc.repository.PokemonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class HabilidadeService {
-
     private final HabilidadeRepository habilidadeRepository;
     private final ObjectMapper objectMapper;
 
@@ -51,5 +51,4 @@ public class HabilidadeService {
         HabilidadeEntity habilidadeEntity = findById(idHabilidade);
         habilidadeRepository.delete(habilidadeEntity);
     }
-
 }

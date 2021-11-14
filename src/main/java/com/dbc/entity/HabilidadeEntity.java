@@ -1,10 +1,8 @@
 package com.dbc.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Setter
 @Getter
@@ -21,8 +19,4 @@ public class HabilidadeEntity {
 
     @Column(name = "mult_de_poder_habilidade")
     private Double multiplicacaoDePoder;
-
-//    @JsonIgnore
-    @ManyToMany(mappedBy = "habilidades", fetch = FetchType.LAZY)
-    private Set<PokemonEntity> pokemons;
 }

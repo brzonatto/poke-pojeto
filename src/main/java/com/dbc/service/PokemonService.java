@@ -1,11 +1,12 @@
 package com.dbc.service;
 
-import com.dbc.dto.PokemonCreateDTO;
-import com.dbc.dto.PokemonDTO;
+import com.dbc.dto.*;
+import com.dbc.entity.HabilidadeEntity;
 import com.dbc.entity.PokemonEntity;
+import com.dbc.entity.StatusEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.repository.EvolucaoRepository;
-import com.dbc.repository.HabilidadePokemonRepository;
+import com.dbc.repository.HabilidadeRepository;
 import com.dbc.repository.PokemonRepository;
 import com.dbc.repository.TipoPokemonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,9 +20,9 @@ import java.util.stream.Collectors;
 @Service
 public class PokemonService {
     private final PokemonRepository pokemonRepository;
+    private final HabilidadeRepository habilidadeRepository;
     private final TipoPokemonRepository tipoPokemonRepository;
     private final EvolucaoRepository evolucaoRepository;
-    private final HabilidadePokemonRepository habilidadePokemonRepository;
     private final ObjectMapper objectMapper;
 
     public PokemonDTO create(PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException {
@@ -50,14 +51,37 @@ public class PokemonService {
         }
         PokemonEntity find = findById(idPokemon);
         find.setAltura(pokemonCreateDTO.getAltura());
+        find.setNome(pokemonCreateDTO.getNome());
         find.setCategoria(pokemonCreateDTO.getCategoria());
         find.setLevel(pokemonCreateDTO.getLevel());
         find.setRegiaoDominante(pokemonCreateDTO.getRegiaoDominante());
         find.setNumero(pokemonCreateDTO.getNumero());
         find.setPeso(pokemonCreateDTO.getPeso());
+        find.setStatus(objectMapper.convertValue(pokemonCreateDTO.getStatus(), StatusEntity.class));
         PokemonEntity update = pokemonRepository.save(find);
         PokemonDTO dto = objectMapper.convertValue(update,PokemonDTO.class);
         return dto;
+    }
+
+    public PokemonHabilidadeDTO setHabilidades(Integer idPokemon, PokemonHabilidadeCreateDTO pokemonHabilidadeCreateDTO) throws RegraDeNegocioException {
+        PokemonEntity pokemonEntity = findById(idPokemon);
+        pokemonEntity.setHabilidades(
+                pokemonHabilidadeCreateDTO.getIdHabilidades()
+                        .stream()
+                        .map(idHabilidades -> habilidadeRepository.findById(idHabilidades).get())
+                        .collect(Collectors.toSet())
+        );
+        PokemonEntity setHabilities = pokemonRepository.save(pokemonEntity);
+        PokemonDTO pokemonDTO = objectMapper.convertValue(setHabilities, PokemonDTO.class);
+        PokemonHabilidadeDTO pokemonHabilidadeDTO = new PokemonHabilidadeDTO();
+        pokemonHabilidadeDTO.setPokemon(pokemonDTO);
+        pokemonHabilidadeDTO.setHabilidades(
+                setHabilities.getHabilidades()
+                        .stream()
+                        .map(habilidade -> objectMapper.convertValue(habilidade, HabilidadeDTO.class))
+                        .collect(Collectors.toList())
+        );
+        return pokemonHabilidadeDTO;
     }
 
     public void delete(Integer idPokemon) throws RegraDeNegocioException {
