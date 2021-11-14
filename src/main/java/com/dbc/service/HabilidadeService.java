@@ -4,11 +4,13 @@ import com.dbc.dto.*;
 import com.dbc.entity.HabilidadeEntity;
 import com.dbc.entity.PokemonEntity;
 import com.dbc.entity.TipoPokemonEntity;
+import com.dbc.enums.Tipo;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.repository.HabilidadeRepository;
 import com.dbc.repository.PokemonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.var;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,10 +28,18 @@ public class HabilidadeService {
         return entity;
     }
 
-    public HabilidadeDTO create(HabilidadeCreateDTO habilidadeCreateDTO){ //TODO arrumuar escala no banco de dados da variavel mult de poder
+    public HabilidadeDTO create(HabilidadeCreateDTO habilidadeCreateDTO) throws RegraDeNegocioException { //TODO arrumuar escala no banco de dados da variavel mult de poder
         HabilidadeEntity habilidadeEntity = objectMapper.convertValue(habilidadeCreateDTO, HabilidadeEntity.class);
+        if (existeHabilidadeRepetida(habilidadeEntity)) {
+            throw new RegraDeNegocioException("não deve conter habilidades repetidas");
+        }
         HabilidadeEntity habilidadeCriada = habilidadeRepository.save(habilidadeEntity);
         return objectMapper.convertValue(habilidadeCriada, HabilidadeDTO.class);
+    }
+
+    public boolean existeHabilidadeRepetida(HabilidadeEntity dto) {
+        var habilidades = habilidadeRepository.findAll();
+        return habilidades.contains(dto);
     }
 
     public List<HabilidadeDTO> list() {

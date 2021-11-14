@@ -11,6 +11,7 @@ import com.dbc.repository.PokemonRepository;
 import com.dbc.repository.TipoPokemonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.var;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,13 +36,15 @@ public class TipoPokemonService {
 
 
     public TipoPokemonDTO create(Integer idPokemon, Tipo tipo) throws RegraDeNegocioException {
+        PokemonEntity entity = pokemonRepository.findById(idPokemon).orElseThrow(() -> new RegraDeNegocioException("NAO ACHOU O POKE"));
+
 //        if (existPoke(idPokemon)) {
 //            throw new RegraDeNegocioException("pokémon deve ser diferente, pois, já existe tipo cadastrado");
 //        }
-//        if (existTipoRepetido(tipoPokemonCreateDTO.getTipo())) {
-//            throw new RegraDeNegocioException("não deve conter tipos repetidos");
-//        }
-        PokemonEntity entity = pokemonRepository.findById(idPokemon).orElseThrow(() -> new RegraDeNegocioException("NAO ACHOU O POKE"));
+        if (existeTipoRepetido(entity, tipo)) {
+            throw new RegraDeNegocioException("não deve conter tipos repetidos");
+        }
+
 //        TipoPokemonEntity tipoPokemonEntity = objectMapper.convertValue(tipoPokemonCreateDTO, TipoPokemonEntity.class);
         TipoPokemonEntity tipoPokemonEntity = new TipoPokemonEntity();
         tipoPokemonEntity.setPokemon(entity);
@@ -80,11 +83,17 @@ public class TipoPokemonService {
 
 
 
-    public Boolean existTipoRepetido(List<Tipo> tipoList) {
-        List<Tipo> semRepetidos = tipoList.stream().distinct().collect(Collectors.toList());
-        if (semRepetidos.size() != tipoList.size()) {
-            return true;
-        }
-        return false;
+    public boolean existeTipoRepetido(PokemonEntity entity, Tipo tipo) {
+        var tipos = entity.getTipos();
+        return tipos.contains(tipo);
     }
+
+
+//    public Boolean existTipoRepetido(List<Tipo> tipoList) {
+//        List<Tipo> semRepetidos = tipoList.stream().distinct().collect(Collectors.toList());
+//        if (semRepetidos.size() != tipoList.size()) {
+//            return true;
+//        }
+//        return false;
+//    }
 }

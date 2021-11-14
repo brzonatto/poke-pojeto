@@ -5,11 +5,13 @@ import com.dbc.entity.EvolucaoEntity;
 import com.dbc.entity.HabilidadeEntity;
 import com.dbc.entity.PokemonEntity;
 import com.dbc.entity.TipoPokemonEntity;
+import com.dbc.enums.Tipo;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.repository.EvolucaoRepository;
 import com.dbc.repository.PokemonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.var;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,10 +31,19 @@ public class EvolucaoService {
         return entity;
     }
 
-    public EvolucaoDTO create(EvolucaoCreateDTO evolucaoCreateDTO) { //TODO arrumar regra de negocio
+    public boolean existePokemonRepetidoNaEvolucao(EvolucaoEntity evolucao) {
+        var pokemon1 = evolucao.getEstagioUm();
+        var pokemon2 = evolucao.getEstagioDois();
+        var pokemon3 = evolucao.getEstagioTres();
+        return pokemon1.equals(pokemon2) || pokemon1.equals(pokemon3) || pokemon2.equals(pokemon3);
+    }
+
+    public EvolucaoDTO create(EvolucaoCreateDTO evolucaoCreateDTO) throws RegraDeNegocioException { //TODO arrumar regra de negocio
         PokemonEntity estagioUm = pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioUm()).get();
         PokemonEntity estagioDois = pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioDois()).get();
         PokemonEntity estagioTres = null;
+
+
 
         EvolucaoEntity evolucaoEntity = objectMapper.convertValue(evolucaoCreateDTO, EvolucaoEntity.class);
         evolucaoEntity.setEstagioUm(estagioUm);
@@ -40,6 +51,10 @@ public class EvolucaoService {
         if (evolucaoCreateDTO.getIdEstagioTres() != null) {
             estagioTres = pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioTres()).get();
             evolucaoEntity.setEstagioTres(estagioTres);
+        }
+
+        if (existePokemonRepetidoNaEvolucao(evolucaoEntity)) {
+            throw new RegraDeNegocioException("não deve conter tipos repetidos");
         }
 
         EvolucaoEntity evolucaoCriada = evolucaoRepository.save(evolucaoEntity);

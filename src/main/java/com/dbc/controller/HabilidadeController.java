@@ -33,7 +33,7 @@ public class HabilidadeController {
             @ApiResponse(code = 500, message = "Exceção no sistema")
     })
     @PostMapping
-    public HabilidadeDTO create(@RequestBody @Valid HabilidadeCreateDTO habilidadeCreateDTO) {
+    public HabilidadeDTO create(@RequestBody @Valid HabilidadeCreateDTO habilidadeCreateDTO) throws RegraDeNegocioException {
         HabilidadeDTO habilidadeCriada = habilidadeService.create(habilidadeCreateDTO);
         return habilidadeCriada;
     }
