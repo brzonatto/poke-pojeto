@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,18 +30,37 @@ public class EvolucaoService {
     }
 
     public EvolucaoDTO create(EvolucaoCreateDTO evolucaoCreateDTO) { //TODO arrumar regra de negocio
-        EvolucaoEntity evolucaoEntity = new EvolucaoEntity();
-        evolucaoEntity.setEstagioUm(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioUm()).get());
-        evolucaoEntity.setEstagioDois(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioDois()).get());
+        PokemonEntity estagioUm = pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioUm()).get();
+        PokemonEntity estagioDois = pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioDois()).get();
+        PokemonEntity estagioTres = null;
+
+        EvolucaoEntity evolucaoEntity = objectMapper.convertValue(evolucaoCreateDTO, EvolucaoEntity.class);
+        evolucaoEntity.setEstagioUm(estagioUm);
+        evolucaoEntity.setEstagioDois(estagioDois);
         if (evolucaoCreateDTO.getIdEstagioTres() != null) {
-            evolucaoEntity.setEstagioTres(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioTres()).get());
+            estagioTres = pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioTres()).get();
+            evolucaoEntity.setEstagioTres(estagioTres);
         }
-        evolucaoEntity = evolucaoRepository.save(evolucaoEntity);
-        EvolucaoDTO evolucaoDTO = new EvolucaoDTO();
-        evolucaoDTO.setIdEvolucao(evolucaoEntity.getIdEvolucao());
-        evolucaoDTO.setEstagioUm(objectMapper.convertValue(evolucaoEntity.getEstagioUm(), PokemonDTO.class));
-        evolucaoDTO.setEstagioDois(objectMapper.convertValue(evolucaoEntity.getEstagioDois(), PokemonDTO.class));
-        evolucaoDTO.setEstagioTres(objectMapper.convertValue(evolucaoEntity.getEstagioTres(), PokemonDTO.class));
+
+        EvolucaoEntity evolucaoCriada = evolucaoRepository.save(evolucaoEntity);
+
+        estagioUm.setEvolucaoEntity(evolucaoCriada);
+        estagioDois.setEvolucaoEntity(evolucaoCriada);
+        if (evolucaoCreateDTO.getIdEstagioTres() != null) {
+            estagioTres.setEvolucaoEntity(evolucaoCriada);
+        }
+
+        PokemonEntity updateEstagioUm = pokemonRepository.save(estagioUm);
+        PokemonEntity updateEstagioDois = pokemonRepository.save(estagioDois);
+        PokemonEntity updateEstagiotres = null;
+        if (evolucaoCreateDTO.getIdEstagioTres() != null) {
+            updateEstagiotres = pokemonRepository.save(estagioTres);
+        }
+
+        EvolucaoDTO evolucaoDTO = objectMapper.convertValue(evolucaoCriada, EvolucaoDTO.class);
+        evolucaoDTO.setEstagioUm(objectMapper.convertValue(updateEstagioUm, PokemonDTO.class));
+        evolucaoDTO.setEstagioDois(objectMapper.convertValue(updateEstagioDois, PokemonDTO.class));
+        evolucaoDTO.setEstagioTres(objectMapper.convertValue(updateEstagiotres, PokemonDTO.class));
         return evolucaoDTO;
     }
 
@@ -100,6 +120,19 @@ public class EvolucaoService {
 
     public void delete(Integer idEvolucao) throws RegraDeNegocioException {
         EvolucaoEntity entity = findById(idEvolucao);
+        PokemonEntity updateUm = pokemonRepository.findById(entity.getEstagioUm().getIdPokemon()).get();
+        updateUm.setEvolucaoEntity(null);
+        PokemonEntity updateDois = pokemonRepository.findById(entity.getEstagioDois().getIdPokemon()).get();
+        updateDois.setEvolucaoEntity(null);
+        PokemonEntity updateTres = pokemonRepository.findById(entity.getEstagioTres().getIdPokemon()).get();
+        updateTres.setEvolucaoEntity(null);
+
+        List<PokemonEntity> list = new ArrayList<>();
+        list.add(updateUm);
+        list.add(updateDois);
+        list.add(updateTres);
+
+        pokemonRepository.saveAll(list);
         evolucaoRepository.delete(entity);
     }
 

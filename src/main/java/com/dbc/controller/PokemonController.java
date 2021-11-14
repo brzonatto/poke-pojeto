@@ -71,6 +71,4 @@ public class PokemonController {
     public PokemonHabilidadeDTO addHabilidade(@PathVariable("idPokemon") Integer idPokemon, @RequestBody PokemonHabilidadeCreateDTO pokemonHabilidadeCreateDTO) throws RegraDeNegocioException {
         return pokemonService.setHabilidades(idPokemon, pokemonHabilidadeCreateDTO);
    }
-
-
 }
