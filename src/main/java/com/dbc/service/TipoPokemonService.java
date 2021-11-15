@@ -15,6 +15,7 @@ import lombok.var;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,14 +38,12 @@ public class TipoPokemonService {
 
     public TipoPokemonDTO create(Integer idPokemon, Tipo tipo) throws RegraDeNegocioException {
         PokemonEntity entity = pokemonRepository.findById(idPokemon).orElseThrow(() -> new RegraDeNegocioException("NAO ACHOU O POKE"));
-
-//        if (existPoke(idPokemon)) {
-//            throw new RegraDeNegocioException("pokémon deve ser diferente, pois, já existe tipo cadastrado");
-//        }
+        if (existPoke(idPokemon)) {
+            throw new RegraDeNegocioException("pokémon deve ser diferente, pois, já existe tipo cadastrado");
+        }
         if (existeTipoRepetido(entity, tipo)) {
             throw new RegraDeNegocioException("não deve conter tipos repetidos");
         }
-
 //        TipoPokemonEntity tipoPokemonEntity = objectMapper.convertValue(tipoPokemonCreateDTO, TipoPokemonEntity.class);
         TipoPokemonEntity tipoPokemonEntity = new TipoPokemonEntity();
         tipoPokemonEntity.setPokemon(entity);
@@ -53,6 +52,11 @@ public class TipoPokemonService {
         TipoPokemonDTO tipoPokemonDTO = objectMapper.convertValue(tipoPokemonEntityCriado, TipoPokemonDTO.class);
         tipoPokemonDTO.setIdPokemon(idPokemon);
         return tipoPokemonDTO;
+    }
+
+    public boolean existeTipoRepetido(PokemonEntity entity, Tipo tipo) {
+        List<TipoPokemonEntity> tipos = tipoPokemonRepository.findAll();
+        return tipos.contains(tipo);
     }
 
     public List<TipoPokemonDTO> list() {
@@ -83,10 +87,7 @@ public class TipoPokemonService {
 
 
 
-    public boolean existeTipoRepetido(PokemonEntity entity, Tipo tipo) {
-        var tipos = entity.getTipos();
-        return tipos.contains(tipo);
-    }
+
 
 
 //    public Boolean existTipoRepetido(List<Tipo> tipoList) {

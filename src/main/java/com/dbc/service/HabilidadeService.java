@@ -38,7 +38,7 @@ public class HabilidadeService {
     }
 
     public boolean existeHabilidadeRepetida(HabilidadeEntity dto) {
-        var habilidades = habilidadeRepository.findAll();
+        List<HabilidadeEntity> habilidades = habilidadeRepository.findAll();
         return habilidades.contains(dto);
     }
 
