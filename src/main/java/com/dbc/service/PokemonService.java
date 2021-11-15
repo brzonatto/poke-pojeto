@@ -22,6 +22,7 @@ public class PokemonService {
     private final PokemonRepository pokemonRepository;
     private final HabilidadeRepository habilidadeRepository;
     private final TipoPokemonRepository tipoPokemonRepository;
+    private final EvolucaoService evolucaoService;
     private final EvolucaoRepository evolucaoRepository;
     private final ObjectMapper objectMapper;
 
@@ -86,6 +87,10 @@ public class PokemonService {
 
     public void delete(Integer idPokemon) throws RegraDeNegocioException {
         PokemonEntity find = findById(idPokemon);
+        if (find.getEvolucaoEntity() != null) {
+            evolucaoService.delete(find.getEvolucaoEntity().getIdEvolucao());
+        }
+
         pokemonRepository.delete(find);
 //        if (tipoPokemonRepository.existTipoByPokemon(idPokemon)) {
 //            tipoPokemonRepository.delete(tipoPokemonRepository.getTipoByPokemon(idPokemon).getIdTipoPokemon());

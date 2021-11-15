@@ -31,10 +31,28 @@ public class EvolucaoService {
         return entity;
     }
 
-    public boolean existePokemonRepetidoNaEvolucao(EvolucaoEntity evolucao) {
-        var pokemon1 = evolucao.getEstagioUm();
-        var pokemon2 = evolucao.getEstagioDois();
-        var pokemon3 = evolucao.getEstagioTres();
+    public Boolean existPokemonNaEvolucao(EvolucaoEntity evolucaoEntity) {
+        return evolucaoRepository.findAll()
+                .stream()
+                .anyMatch(evolucao -> {
+                    if (evolucao.getEstagioUm() == null && evolucao.getEstagioDois() == null
+                            && evolucao.getEstagioTres() == null) {
+                        return false;
+                    }
+                    if (evolucao.getEstagioTres() != null) {
+                        return evolucao.getEstagioUm().getIdPokemon().equals(evolucaoEntity.getEstagioUm().getIdPokemon()) ||
+                                evolucao.getEstagioDois().getIdPokemon().equals(evolucaoEntity.getEstagioDois().getIdPokemon()) ||
+                                evolucao.getEstagioTres().getIdPokemon().equals(evolucaoEntity.getEstagioTres().getIdPokemon());
+                    }
+                    return evolucao.getEstagioUm().getIdPokemon().equals(evolucaoEntity.getEstagioUm().getIdPokemon()) ||
+                            evolucao.getEstagioDois().getIdPokemon().equals(evolucaoEntity.getEstagioDois().getIdPokemon());
+                });
+    }
+
+    public Boolean existePokemonRepetidoNaEvolucao(EvolucaoEntity evolucao) {
+        PokemonEntity pokemon1 = evolucao.getEstagioUm();
+        PokemonEntity pokemon2 = evolucao.getEstagioDois();
+        PokemonEntity pokemon3 = evolucao.getEstagioTres();
         return pokemon1.equals(pokemon2) || pokemon1.equals(pokemon3) || pokemon2.equals(pokemon3);
     }
 
@@ -42,8 +60,6 @@ public class EvolucaoService {
         PokemonEntity estagioUm = pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioUm()).get();
         PokemonEntity estagioDois = pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioDois()).get();
         PokemonEntity estagioTres = null;
-
-
 
         EvolucaoEntity evolucaoEntity = objectMapper.convertValue(evolucaoCreateDTO, EvolucaoEntity.class);
         evolucaoEntity.setEstagioUm(estagioUm);
@@ -54,8 +70,13 @@ public class EvolucaoService {
         }
 
         if (existePokemonRepetidoNaEvolucao(evolucaoEntity)) {
-            throw new RegraDeNegocioException("não deve conter tipos repetidos");
+            throw new RegraDeNegocioException("não deve conter pokemons repetidos na evolução");
         }
+
+        if (existPokemonNaEvolucao(evolucaoEntity)) {
+            throw new RegraDeNegocioException("Pokémon deve ser diferente, pois, já existe em uma evolução cadastrada");
+        }
+
 
         EvolucaoEntity evolucaoCriada = evolucaoRepository.save(evolucaoEntity);
 
@@ -67,15 +88,15 @@ public class EvolucaoService {
 
         PokemonEntity updateEstagioUm = pokemonRepository.save(estagioUm);
         PokemonEntity updateEstagioDois = pokemonRepository.save(estagioDois);
-        PokemonEntity updateEstagiotres = null;
+        PokemonEntity updateEstagioTres = null;
         if (evolucaoCreateDTO.getIdEstagioTres() != null) {
-            updateEstagiotres = pokemonRepository.save(estagioTres);
+            updateEstagioTres = pokemonRepository.save(estagioTres);
         }
 
         EvolucaoDTO evolucaoDTO = objectMapper.convertValue(evolucaoCriada, EvolucaoDTO.class);
         evolucaoDTO.setEstagioUm(objectMapper.convertValue(updateEstagioUm, PokemonDTO.class));
         evolucaoDTO.setEstagioDois(objectMapper.convertValue(updateEstagioDois, PokemonDTO.class));
-        evolucaoDTO.setEstagioTres(objectMapper.convertValue(updateEstagiotres, PokemonDTO.class));
+        evolucaoDTO.setEstagioTres(objectMapper.convertValue(updateEstagioTres, PokemonDTO.class));
         return evolucaoDTO;
     }
 

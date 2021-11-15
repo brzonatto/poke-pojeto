@@ -45,7 +45,7 @@ public class PokemonEntity {
     private Set<TipoPokemonEntity> tipos;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany
     @JoinTable(
             name = "pokemon_habilidade",
             joinColumns = @JoinColumn(name = "fk_pokemon_id_pokemon"),
