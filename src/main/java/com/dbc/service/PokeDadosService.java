@@ -19,78 +19,49 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PokeDadosService {
     private final PokemonRepository pokemonRepository;
-    private final TipoPokemonRepository tipoPokemonRepository;
-    private final HabilidadeRepository habilidadeRepository;
-    private final EvolucaoRepository evolucaoRepository;
     private final ObjectMapper objectMapper;
-
     private final PokemonService pokemonService;
 
     public List<PokeDadosDTO> list(Integer idPoke) throws RegraDeNegocioException {
         List<PokeDadosDTO> listaPokemonComTodosDados = new ArrayList<>();
-
         if (idPoke == null) {
-
             return  pokemonRepository.findAll()
                     .stream()
                     .map(pokemon -> {
-                        PokemonCreateDTO pokemonCreateDTO = objectMapper.convertValue(pokemon, PokemonCreateDTO.class);
-                        PokeDadosDTO pokeDadosDTO = new PokeDadosDTO();
-                        pokeDadosDTO.setPokemon(pokemonCreateDTO);
-                        pokeDadosDTO.setTipos(
-                                pokemon.getTipos()
-                                        .stream()
-                                        .map(tipo -> objectMapper.convertValue(tipo, TipoPokemonCreateDTO.class))
-                                        .collect(Collectors.toList())
-                        );
-                        pokeDadosDTO.setHabilidades(
-                                pokemon.getHabilidades()
-                                        .stream()
-                                        .map(habilidade -> objectMapper.convertValue(habilidade, HabilidadeCreateDTO.class))
-                                        .collect(Collectors.toList())
-                        );
-
-                        if (pokemon.getEvolucaoEntity() != null) {
-                            EvolucaoNomesDTO evolucaoNomesDTO = new EvolucaoNomesDTO();
-                            evolucaoNomesDTO.setEstagioUm(pokemon.getEvolucaoEntity().getEstagioUm().getNome());
-                            evolucaoNomesDTO.setEstagioDois(pokemon.getEvolucaoEntity().getEstagioDois().getNome());
-                            if (pokemon.getEvolucaoEntity().getEstagioTres() != null) {
-                                evolucaoNomesDTO.setEstagioTres(pokemon.getEvolucaoEntity().getEstagioTres().getNome());
-                            }
-                            pokeDadosDTO.setEvolucao(evolucaoNomesDTO);
-                        }
-
-                        return pokeDadosDTO;
+                        return setPokeDadosDTO(pokemon);
                     })
                     .collect(Collectors.toList());
         }
         PokemonEntity pokemonEntity = pokemonService.findById(idPoke);
-        PokeDadosDTO pokeDadosDTO = objectMapper.convertValue(pokemonEntity, PokeDadosDTO.class);
-        pokeDadosDTO.setPokemon(objectMapper.convertValue(pokemonEntity, PokemonCreateDTO.class));
+        listaPokemonComTodosDados.add(setPokeDadosDTO(pokemonEntity));
+        return listaPokemonComTodosDados;
+    }
+
+    public PokeDadosDTO setPokeDadosDTO(PokemonEntity pokemon) {
+        PokemonCreateDTO pokemonCreateDTO = objectMapper.convertValue(pokemon, PokemonCreateDTO.class);
+        PokeDadosDTO pokeDadosDTO = new PokeDadosDTO();
+        pokeDadosDTO.setPokemon(pokemonCreateDTO);
         pokeDadosDTO.setTipos(
-                pokemonEntity.getTipos()
+                pokemon.getTipos()
                         .stream()
                         .map(tipo -> objectMapper.convertValue(tipo, TipoPokemonCreateDTO.class))
                         .collect(Collectors.toList())
         );
         pokeDadosDTO.setHabilidades(
-                pokemonEntity.getHabilidades()
+                pokemon.getHabilidades()
                         .stream()
                         .map(habilidade -> objectMapper.convertValue(habilidade, HabilidadeCreateDTO.class))
                         .collect(Collectors.toList())
         );
-        if (pokemonEntity.getEvolucaoEntity() != null) {
-            EvolucaoNomesDTO evoNomesDTO = new EvolucaoNomesDTO();
-            evoNomesDTO.setEstagioUm(pokemonEntity.getEvolucaoEntity().getEstagioUm().getNome());
-            evoNomesDTO.setEstagioDois(pokemonEntity.getEvolucaoEntity().getEstagioDois().getNome());
-            if (pokemonEntity.getEvolucaoEntity().getEstagioTres() != null) {
-                evoNomesDTO.setEstagioTres(pokemonEntity.getEvolucaoEntity().getEstagioTres().getNome());
+        if (pokemon.getEvolucaoEntity() != null) {
+            EvolucaoNomesDTO evolucaoNomesDTO = new EvolucaoNomesDTO();
+            evolucaoNomesDTO.setEstagioUm(pokemon.getEvolucaoEntity().getEstagioUm().getNome());
+            evolucaoNomesDTO.setEstagioDois(pokemon.getEvolucaoEntity().getEstagioDois().getNome());
+            if (pokemon.getEvolucaoEntity().getEstagioTres() != null) {
+                evolucaoNomesDTO.setEstagioTres(pokemon.getEvolucaoEntity().getEstagioTres().getNome());
             }
-            pokeDadosDTO.setEvolucao(evoNomesDTO);
+            pokeDadosDTO.setEvolucao(evolucaoNomesDTO);
         }
-
-        listaPokemonComTodosDados.add(pokeDadosDTO);
-
-        return listaPokemonComTodosDados;
+        return pokeDadosDTO;
     }
 }
