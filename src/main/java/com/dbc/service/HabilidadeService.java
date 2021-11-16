@@ -2,26 +2,19 @@ package com.dbc.service;
 
 import com.dbc.dto.*;
 import com.dbc.entity.HabilidadeEntity;
-import com.dbc.entity.PokemonEntity;
-import com.dbc.entity.TipoPokemonEntity;
-import com.dbc.enums.Tipo;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.repository.HabilidadeRepository;
-import com.dbc.repository.PokemonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class HabilidadeService {
     private final HabilidadeRepository habilidadeRepository;
-    private final PokemonRepository pokemonRepository;
     private final ObjectMapper objectMapper;
 
     private HabilidadeEntity findById(Integer id) throws RegraDeNegocioException {
@@ -42,7 +35,7 @@ public class HabilidadeService {
                 .collect(Collectors.toList());
     }
 
-    public HabilidadeDTO update(Integer idHabilidade, HabilidadeCreateDTO habilidadeCreateDTO) throws RegraDeNegocioException { //TODO arrumuar escala no banco de dados da variavel mult de poder
+    public HabilidadeDTO update(Integer idHabilidade, HabilidadeCreateDTO habilidadeCreateDTO) throws RegraDeNegocioException {
         findById(idHabilidade);
         HabilidadeEntity entity = objectMapper.convertValue(habilidadeCreateDTO, HabilidadeEntity.class);
         entity.setIdHabilidade(idHabilidade);

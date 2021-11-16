@@ -60,7 +60,21 @@ public class PokemonService {
         return dto;
     }
 
+    public Boolean existisSetHabilidadeRepetida(PokemonHabilidadeCreateDTO pokemonHabilidadeCreateDTO) {
+        List<Integer> listSemRepetidos = pokemonHabilidadeCreateDTO.getIdHabilidades()
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
+        if (listSemRepetidos.size() != pokemonHabilidadeCreateDTO.getIdHabilidades().size()) {
+            return true;
+        }
+        return false;
+    }
+
     public PokemonHabilidadeDTO setHabilidades(Integer idPokemon, PokemonHabilidadeCreateDTO pokemonHabilidadeCreateDTO) throws RegraDeNegocioException {
+        if (existisSetHabilidadeRepetida(pokemonHabilidadeCreateDTO)) {
+            throw new RegraDeNegocioException("não deve existir habilidades repetidas para o mesmo pokemon");
+        }
         PokemonEntity pokemonEntity = findById(idPokemon);
         pokemonEntity.setHabilidades(
                 pokemonHabilidadeCreateDTO.getIdHabilidades()

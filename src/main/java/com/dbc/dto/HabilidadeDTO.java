@@ -1,6 +1,5 @@
 package com.dbc.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,9 +14,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class HabilidadeDTO {
     private Integer idHabilidade;
-//
-//    @JsonIgnore
-//    private Integer idPokemon;
 
     @NotEmpty
     @NotBlank

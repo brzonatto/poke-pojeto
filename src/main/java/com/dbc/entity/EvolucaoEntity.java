@@ -26,7 +26,7 @@ public class EvolucaoEntity{
     private PokemonEntity estagioDois;
 
     @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "id_poke_estagio_3_evolucao", referencedColumnName = "id_pokemon")
+    @OneToOne()
+    @JoinColumn(name = "id_poke_estagio_3_evolucao", referencedColumnName = "id_pokemon", nullable = true)
     private PokemonEntity estagioTres;
 }
