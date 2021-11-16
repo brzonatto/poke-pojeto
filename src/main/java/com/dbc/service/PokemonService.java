@@ -1,6 +1,7 @@
 package com.dbc.service;
 
 import com.dbc.dto.*;
+import com.dbc.entity.HabilidadeEntity;
 import com.dbc.entity.PokemonEntity;
 import com.dbc.entity.StatusEntity;
 import com.dbc.exceptions.RegraDeNegocioException;

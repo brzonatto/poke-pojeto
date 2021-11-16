@@ -14,12 +14,14 @@ import lombok.var;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class HabilidadeService {
     private final HabilidadeRepository habilidadeRepository;
+    private final PokemonRepository pokemonRepository;
     private final ObjectMapper objectMapper;
 
     private HabilidadeEntity findById(Integer id) throws RegraDeNegocioException {
@@ -51,6 +53,7 @@ public class HabilidadeService {
 
     public void delete(Integer idHabilidade) throws RegraDeNegocioException{
         HabilidadeEntity habilidadeEntity = findById(idHabilidade);
+        habilidadeRepository.deleteAllByIdHabilidade(idHabilidade);
         habilidadeRepository.delete(habilidadeEntity);
     }
 }
