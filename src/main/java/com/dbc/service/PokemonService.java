@@ -1,7 +1,6 @@
 package com.dbc.service;
 
 import com.dbc.dto.*;
-import com.dbc.entity.HabilidadeEntity;
 import com.dbc.entity.PokemonEntity;
 import com.dbc.entity.StatusEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
@@ -34,10 +33,6 @@ public class PokemonService {
         PokemonEntity pokemonCriado = pokemonRepository.save(pokemonEntity);
         PokemonDTO pokemonDTO = objectMapper.convertValue(pokemonCriado, PokemonDTO.class);
         return pokemonDTO;
-    }
-
-    public PokemonEntity getByID(Integer idPokemon) {
-        return pokemonRepository.findById(idPokemon).get();
     }
 
     public List<PokemonDTO> list() {
@@ -90,17 +85,7 @@ public class PokemonService {
         if (find.getEvolucaoEntity() != null) {
             evolucaoService.delete(find.getEvolucaoEntity().getIdEvolucao());
         }
-
         pokemonRepository.delete(find);
-//        if (tipoPokemonRepository.existTipoByPokemon(idPokemon)) {
-//            tipoPokemonRepository.delete(tipoPokemonRepository.getTipoByPokemon(idPokemon).getIdTipoPokemon());
-//        }
-//        if (evolucaoRepository.existEvolucaoByPokemon(idPokemon)) {
-//            evolucaoRepository.delete(evolucaoRepository.getEvolucaoByPokemon(idPokemon).getIdEvolucao());
-//        }
-//        if (habilidadePokemonRepository.existHabilidadeByPokemon(idPokemon)) {
-//            habilidadePokemonRepository.delete(habilidadePokemonRepository.getHabilidadeByPokemon(idPokemon).getIdHabilidadePokemon());
-//        }
     }
 
     public PokemonEntity findById(Integer id) throws RegraDeNegocioException {

@@ -9,7 +9,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +18,7 @@ public class PokemonDTO {
     private Integer idPokemon;
 
     @NotNull
+    @Min(1)
     @ApiModelProperty("Número do Pokémon na pokédex")
     private Integer numero;
 
@@ -45,11 +45,10 @@ public class PokemonDTO {
     @ApiModelProperty("Categoria do Pokémon")
     private String categoria;
 
-    @ApiModelProperty("Região dominante do Pokémon, caso for lendário")
+    @ApiModelProperty("Região dominante do Pokémon, caso lendário")
     private String regiaoDominante;
 
     @ApiModelProperty("Status do Pokémon")
     @NotNull
     private StatusDTO status;
-
 }

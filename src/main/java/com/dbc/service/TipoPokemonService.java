@@ -1,6 +1,5 @@
 package com.dbc.service;
 
-import com.dbc.dto.PokemonDTO;
 import com.dbc.dto.TipoPokemonCreateDTO;
 import com.dbc.dto.TipoPokemonDTO;
 import com.dbc.entity.PokemonEntity;
@@ -11,11 +10,9 @@ import com.dbc.repository.PokemonRepository;
 import com.dbc.repository.TipoPokemonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,20 +28,18 @@ public class TipoPokemonService {
         return entity;
     }
 
-    public Boolean existPoke(Integer idPokemon) {
-        return pokemonRepository.existsById(idPokemon);
+    public Boolean existTipoNoPokemon(Integer idPokemon, Tipo tipo) {
+        if (tipoPokemonRepository.searchByPokemon(idPokemon, tipo) == 0) {
+            return false;
+        }
+        return true;
     }
-
 
     public TipoPokemonDTO create(Integer idPokemon, Tipo tipo) throws RegraDeNegocioException {
         PokemonEntity entity = pokemonRepository.findById(idPokemon).orElseThrow(() -> new RegraDeNegocioException("NAO ACHOU O POKE"));
-        if (existPoke(idPokemon)) {
-            throw new RegraDeNegocioException("pokémon deve ser diferente, pois, já existe tipo cadastrado");
+        if (existTipoNoPokemon(idPokemon, tipo)) {
+            throw new RegraDeNegocioException("este tipo ja está cadastrado para este pokémon");
         }
-        if (existeTipoRepetido(entity, tipo)) {
-            throw new RegraDeNegocioException("não deve conter tipos repetidos");
-        }
-//        TipoPokemonEntity tipoPokemonEntity = objectMapper.convertValue(tipoPokemonCreateDTO, TipoPokemonEntity.class);
         TipoPokemonEntity tipoPokemonEntity = new TipoPokemonEntity();
         tipoPokemonEntity.setPokemon(entity);
         tipoPokemonEntity.setTipo(tipo);
@@ -52,11 +47,6 @@ public class TipoPokemonService {
         TipoPokemonDTO tipoPokemonDTO = objectMapper.convertValue(tipoPokemonEntityCriado, TipoPokemonDTO.class);
         tipoPokemonDTO.setIdPokemon(idPokemon);
         return tipoPokemonDTO;
-    }
-
-    public boolean existeTipoRepetido(PokemonEntity entity, Tipo tipo) {
-        List<TipoPokemonEntity> tipos = tipoPokemonRepository.findAll();
-        return tipos.contains(tipo);
     }
 
     public List<TipoPokemonDTO> list() {
@@ -69,12 +59,13 @@ public class TipoPokemonService {
                 .collect(Collectors.toList());
     }
 
-    public TipoPokemonDTO update(Integer idTipo, TipoPokemonCreateDTO tipoPokemonCreateDTO) throws RegraDeNegocioException {
+    public TipoPokemonDTO update(Integer idTipo, Tipo tipo) throws RegraDeNegocioException {
         TipoPokemonEntity tipoPokemonEntity = findById(idTipo);
-        TipoPokemonEntity entity = objectMapper.convertValue(tipoPokemonCreateDTO, TipoPokemonEntity.class);
-        entity.setIdTipoPokemon(idTipo);
-        entity.setPokemon(tipoPokemonEntity.getPokemon());
-        TipoPokemonEntity update = tipoPokemonRepository.save(entity);
+        if (existTipoNoPokemon(tipoPokemonEntity.getPokemon().getIdPokemon(), tipo)) {
+            throw new RegraDeNegocioException("este tipo ja está cadastrado para este pokémon");
+        }
+        tipoPokemonEntity.setTipo(tipo);
+        TipoPokemonEntity update = tipoPokemonRepository.save(tipoPokemonEntity);
         TipoPokemonDTO tipoPokemonDTO = objectMapper.convertValue(update, TipoPokemonDTO.class);
         tipoPokemonDTO.setIdPokemon(tipoPokemonEntity.getPokemon().getIdPokemon());
         return tipoPokemonDTO;
@@ -84,17 +75,4 @@ public class TipoPokemonService {
         TipoPokemonEntity tipoPokemonEntity = findById(idTipo);
         tipoPokemonRepository.delete(tipoPokemonEntity);
     }
-
-
-
-
-
-
-//    public Boolean existTipoRepetido(List<Tipo> tipoList) {
-//        List<Tipo> semRepetidos = tipoList.stream().distinct().collect(Collectors.toList());
-//        if (semRepetidos.size() != tipoList.size()) {
-//            return true;
-//        }
-//        return false;
-//    }
 }

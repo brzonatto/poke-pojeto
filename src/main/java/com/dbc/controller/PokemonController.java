@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
@@ -68,7 +69,7 @@ public class PokemonController {
 
 
    @PostMapping("/{idPokemon}/add-habilidade")
-    public PokemonHabilidadeDTO addHabilidade(@PathVariable("idPokemon") Integer idPokemon, @RequestBody PokemonHabilidadeCreateDTO pokemonHabilidadeCreateDTO) throws RegraDeNegocioException {
+    public PokemonHabilidadeDTO addHabilidade(@PathVariable("idPokemon") Integer idPokemon, @RequestBody @Valid PokemonHabilidadeCreateDTO pokemonHabilidadeCreateDTO) throws RegraDeNegocioException {
         return pokemonService.setHabilidades(idPokemon, pokemonHabilidadeCreateDTO);
    }
 }

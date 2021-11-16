@@ -31,7 +31,7 @@ public class EvolucaoService {
         return entity;
     }
 
-    public Boolean existPokemonNaEvolucao(EvolucaoEntity evolucaoEntity) {
+    public Boolean existPokemonNaEvolucao(EvolucaoEntity evolucaoEntity) { // TODO ARRUMAR LOGICA
         return evolucaoRepository.findAll()
                 .stream()
                 .anyMatch(evolucao -> {

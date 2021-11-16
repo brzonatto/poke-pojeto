@@ -1,6 +1,5 @@
 package com.dbc.controller;
 
-import com.dbc.dto.PokemonDTO;
 import com.dbc.dto.TipoPokemonCreateDTO;
 import com.dbc.dto.TipoPokemonDTO;
 import com.dbc.enums.Tipo;
@@ -15,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -50,8 +50,8 @@ public class TipoPokemonController {
             @ApiResponse(code = 400, message = "Tipo não encontrado"),
             @ApiResponse(code = 500, message = "Excessão no sistema")
     })
-    public TipoPokemonDTO update(@PathVariable("idTipo") Integer idTipo, @RequestBody @Valid TipoPokemonCreateDTO tipoPokemonCreateDTO) throws RegraDeNegocioException {
-        return tipoPokemonService.update(idTipo, tipoPokemonCreateDTO);
+    public TipoPokemonDTO update(@PathVariable("idTipo") Integer idTipo, @RequestParam @NotNull Tipo tipo) throws RegraDeNegocioException {
+        return tipoPokemonService.update(idTipo, tipo);
     }
 
     @ApiOperation("Excluir tipo do Pokémon")
@@ -64,14 +64,4 @@ public class TipoPokemonController {
     public void delete(@PathVariable("idTipo") Integer idTipo) throws RegraDeNegocioException {
         tipoPokemonService.delete(idTipo);
     }
-
-//    @ApiOperation("Listar todos pokémon de um tipo")
-//    @GetMapping("/listarportipo/{tipo}")
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 400, message = "Tipo não encontrado"),
-//            @ApiResponse(code = 500, message = "Excessão no sistema")
-//    })
-//    public List<PokemonDTO> listarPorTipo(@PathVariable("tipo") String tipo){
-//        return tipoPokemonService.listarPorTipo(tipo);
-//    }
 }

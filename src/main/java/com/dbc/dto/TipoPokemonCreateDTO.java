@@ -6,12 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class TipoPokemonCreateDTO {
+    @NotNull
     @ApiModelProperty("Lista de todos os tipos de Pokémon")
     private Tipo tipo;
 }

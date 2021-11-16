@@ -28,18 +28,10 @@ public class HabilidadeService {
         return entity;
     }
 
-    public HabilidadeDTO create(HabilidadeCreateDTO habilidadeCreateDTO) throws RegraDeNegocioException { //TODO arrumuar escala no banco de dados da variavel mult de poder
+    public HabilidadeDTO create(HabilidadeCreateDTO habilidadeCreateDTO) {
         HabilidadeEntity habilidadeEntity = objectMapper.convertValue(habilidadeCreateDTO, HabilidadeEntity.class);
-        if (existeHabilidadeRepetida(habilidadeEntity)) {
-            throw new RegraDeNegocioException("não deve conter habilidades repetidas");
-        }
         HabilidadeEntity habilidadeCriada = habilidadeRepository.save(habilidadeEntity);
         return objectMapper.convertValue(habilidadeCriada, HabilidadeDTO.class);
-    }
-
-    public boolean existeHabilidadeRepetida(HabilidadeEntity dto) {
-        List<HabilidadeEntity> habilidades = habilidadeRepository.findAll();
-        return habilidades.contains(dto);
     }
 
     public List<HabilidadeDTO> list() {
