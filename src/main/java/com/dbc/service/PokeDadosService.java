@@ -41,13 +41,17 @@ public class PokeDadosService {
                                     .map(habilidade -> objectMapper.convertValue(habilidade, HabilidadeCreateDTO.class))
                                     .collect(Collectors.toList())
                     );
-                    EvolucaoNomesDTO evolucaoNomesDTO = new EvolucaoNomesDTO();
-                    evolucaoNomesDTO.setEstagioUm(pokemon.getEvolucaoEntity().getEstagioUm().getNome());
-                    evolucaoNomesDTO.setEstagioDois(pokemon.getEvolucaoEntity().getEstagioDois().getNome());
-                    if (pokemon.getEvolucaoEntity().getEstagioTres() != null) {
-                        evolucaoNomesDTO.setEstagioTres(pokemon.getEvolucaoEntity().getEstagioTres().getNome());
+
+                    if (pokemon.getEvolucaoEntity() != null) {
+                        EvolucaoNomesDTO evolucaoNomesDTO = new EvolucaoNomesDTO();
+                        evolucaoNomesDTO.setEstagioUm(pokemon.getEvolucaoEntity().getEstagioUm().getNome());
+                        evolucaoNomesDTO.setEstagioDois(pokemon.getEvolucaoEntity().getEstagioDois().getNome());
+                        if (pokemon.getEvolucaoEntity().getEstagioTres() != null) {
+                            evolucaoNomesDTO.setEstagioTres(pokemon.getEvolucaoEntity().getEstagioTres().getNome());
+                        }
+                        pokeDadosDTO.setEvolucao(evolucaoNomesDTO);
                     }
-                    pokeDadosDTO.setEvolucao(evolucaoNomesDTO);
+
                     return pokeDadosDTO;
                 })
                 .collect(Collectors.toList());

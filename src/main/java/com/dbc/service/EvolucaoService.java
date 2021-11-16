@@ -161,7 +161,6 @@ public class EvolucaoService {
             updateTres.setEvolucaoEntity(null);
             list.add(updateTres);
         }
-
         pokemonRepository.saveAll(list);
         evolucaoRepository.delete(entity);
     }
