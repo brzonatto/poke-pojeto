@@ -165,7 +165,7 @@ public class EvolucaoService {
         pokemonRepository.saveAll(list);
         evolucaoRepository.delete(entity);
     }
-    
+
     public void updateToNull(Integer idEvolucao) throws RegraDeNegocioException {
         EvolucaoEntity evolucaoEntity = evolucaoRepository.findById(idEvolucao).get();
         evolucaoEntity.setEstagioUm(null);
