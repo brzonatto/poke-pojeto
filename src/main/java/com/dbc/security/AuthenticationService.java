@@ -1,6 +1,7 @@
 package com.dbc.security;
 
 import com.dbc.entity.UsuarioEntity;
+import com.dbc.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
