@@ -32,12 +32,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/auth").permitAll()
-
                 .antMatchers(HttpMethod.GET, "/pokemon/**", "/habilidade/**", "/tipo/**", "/evolucao/**", "/pokemon/dados/**").hasRole("AUXILIAR")
                 .antMatchers(HttpMethod.PUT, "/pokemon/**", "/habilidade/**", "/tipo/**", "/evolucao/**").hasRole("AUXILIAR")
                 .antMatchers(HttpMethod.GET, "/pokemon/**", "/habilidade/**", "/tipo/**", "/evolucao/**", "/pokemon/dados/**").hasRole("TREINADOR")
                 .antMatchers("/**").hasRole("PROFESSOR_CARVALHO")
-
                 .anyRequest().authenticated()
                 .and().addFilterBefore(new TokenAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
     }
