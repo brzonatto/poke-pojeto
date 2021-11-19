@@ -33,9 +33,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/auth").permitAll()
 
-//                .antMatchers(HttpMethod.GET, "/pessoa/**", "/contato/**", "/endereco/**").hasRole("MARKETING")
-//                .antMatchers("/pessoa/**", "/contato/**", "/endereco/**").hasRole("USUARIO")
-//                .antMatchers("/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/pokemon/**", "/habilidade/**", "/tipo/**", "/evolucao/**", "/pokemon/dados/**").hasRole("AUXILIAR")
+                .antMatchers(HttpMethod.PUT, "/pokemon/**", "/habilidade/**", "/tipo/**", "/evolucao/**").hasRole("AUXILIAR")
+                .antMatchers(HttpMethod.GET, "/pokemon/**", "/habilidade/**", "/tipo/**", "/evolucao/**", "/pokemon/dados/**").hasRole("TREINADOR")
+                .antMatchers("/**").hasRole("PROFESSOR_CARVALHO")
 
                 .anyRequest().authenticated()
                 .and().addFilterBefore(new TokenAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
