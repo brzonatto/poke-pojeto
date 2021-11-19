@@ -23,7 +23,6 @@ import javax.validation.Valid;
 @Validated
 @RequiredArgsConstructor
 public class AuthController {
-
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
     private final UsuarioService usuarioService;
