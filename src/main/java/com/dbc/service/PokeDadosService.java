@@ -24,9 +24,7 @@ public class PokeDadosService {
         if (idPoke == null) {
             return  pokemonRepository.findAll()
                     .stream()
-                    .map(pokemon -> {
-                        return setPokeDadosDTO(pokemon);
-                    })
+                    .map(this::setPokeDadosDTO)
                     .collect(Collectors.toList());
         }
         PokemonEntity pokemonEntity = pokemonService.findById(idPoke);

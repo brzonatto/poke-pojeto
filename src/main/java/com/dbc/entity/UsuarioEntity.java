@@ -1,5 +1,6 @@
 package com.dbc.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +27,7 @@ public class UsuarioEntity implements UserDetails {
     @Column(name = "senha")
     private String senha;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "USUARIO_GRUPO",

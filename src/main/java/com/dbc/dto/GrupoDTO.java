@@ -7,25 +7,18 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioCreateDTO {
-    @NotEmpty
+public class GrupoDTO {
     @NotBlank
-    @ApiModelProperty("Usuário")
-    private String usuario;
-
     @NotEmpty
+    @ApiModelProperty("Nome do grupo")
+    private String nome;
+
     @NotBlank
-    @ApiModelProperty("Senha do usuário")
-    private String senha;
-
-    @NotNull
     @NotEmpty
-    @ApiModelProperty("Grupos")
-    private List<Integer> grupos;
+    @ApiModelProperty("Descrição do grupo")
+    private String descricao;
 }

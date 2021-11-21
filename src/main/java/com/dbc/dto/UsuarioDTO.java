@@ -25,5 +25,5 @@ public class UsuarioDTO {
 
     @NotNull
     @ApiModelProperty("Lista de grupos")
-    private List<Integer> grupos;
+    private List<GrupoDTO> grupos;
 }
