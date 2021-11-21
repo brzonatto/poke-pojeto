@@ -11,7 +11,6 @@ import java.util.List;
 @Setter
 @Entity(name = "GRUPO")
 public class GrupoEntity implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_grupo")
     @SequenceGenerator(name = "seq_grupo", sequenceName = "seq_grupo", allocationSize = 1)

@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class EvolucaoCreateDTO {
     @NotNull
-    @ApiModelProperty("Estágio básico Pokémon")
+    @ApiModelProperty("Estágio básico do Pokémon")
     private Integer idEstagioUm;
 
     @NotNull

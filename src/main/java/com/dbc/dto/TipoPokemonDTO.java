@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class TipoPokemonDTO {
     @NotNull
-    @ApiModelProperty("Id do tipo do Pokémon")
+    @ApiModelProperty("Id do tipo Pokémon")
     private Integer idTipoPokemon;
 
     @NotNull
@@ -22,6 +22,6 @@ public class TipoPokemonDTO {
     private Integer idPokemon;
 
     @NotNull
-    @ApiModelProperty("Lista de tipos do Pokémon")
+    @ApiModelProperty("tipo do Pokémon")
     private Tipo tipo;
 }

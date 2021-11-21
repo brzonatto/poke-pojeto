@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HabilidadeDTO {
+    @ApiModelProperty("ID da habilidade")
     private Integer idHabilidade;
 
     @NotEmpty

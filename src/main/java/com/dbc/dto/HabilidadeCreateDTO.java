@@ -19,6 +19,6 @@ public class HabilidadeCreateDTO {
     private String nome;
 
     @NotNull
-    @ApiModelProperty("Número de Multiplicador de poder")
+    @ApiModelProperty("Número do Multiplicador de poder")
     private Double multiplicacaoDePoder;
 }
