@@ -1,14 +1,11 @@
 package com.dbc.service;
 
 import com.dbc.dto.*;
-import com.dbc.entity.HabilidadeEntity;
 import com.dbc.entity.PokemonEntity;
 import com.dbc.entity.StatusEntity;
 import com.dbc.exceptions.RegraDeNegocioException;
-import com.dbc.repository.EvolucaoRepository;
 import com.dbc.repository.HabilidadeRepository;
 import com.dbc.repository.PokemonRepository;
-import com.dbc.repository.TipoPokemonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,9 +18,7 @@ import java.util.stream.Collectors;
 public class PokemonService {
     private final PokemonRepository pokemonRepository;
     private final HabilidadeRepository habilidadeRepository;
-    private final TipoPokemonRepository tipoPokemonRepository;
     private final EvolucaoService evolucaoService;
-    private final EvolucaoRepository evolucaoRepository;
     private final ObjectMapper objectMapper;
 
     public PokemonDTO create(PokemonCreateDTO pokemonCreateDTO) throws RegraDeNegocioException {

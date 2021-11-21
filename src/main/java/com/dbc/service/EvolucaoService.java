@@ -51,8 +51,8 @@ public class EvolucaoService {
     }
 
     public EvolucaoDTO create(EvolucaoCreateDTO evolucaoCreateDTO) throws RegraDeNegocioException {
-        PokemonEntity estagioUm = pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioUm()).get();
-        PokemonEntity estagioDois = pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioDois()).get();
+        PokemonEntity estagioUm = pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioUm()).orElseThrow(() -> new RegraDeNegocioException("Estágio 1 não encontrado"));
+        PokemonEntity estagioDois = pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioDois()).orElseThrow(() -> new RegraDeNegocioException("Estágio 2 não encontrado"));
         PokemonEntity estagioTres = null;
 
         EvolucaoEntity evolucaoEntity = objectMapper.convertValue(evolucaoCreateDTO, EvolucaoEntity.class);
@@ -60,7 +60,7 @@ public class EvolucaoService {
         evolucaoEntity.setEstagioDois(estagioDois);
         evolucaoEntity.setEstagioTres(null);
         if (evolucaoCreateDTO.getIdEstagioTres() != null) {
-            estagioTres = pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioTres()).get();
+            estagioTres = pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioTres()).orElseThrow(() -> new RegraDeNegocioException("Estágio 3 não encontrado"));
             evolucaoEntity.setEstagioTres(estagioTres);
         }
 
@@ -110,10 +110,10 @@ public class EvolucaoService {
 
     public EvolucaoDTO update(Integer idEvolucao, EvolucaoCreateDTO evolucaoCreateDTO) throws RegraDeNegocioException {
         EvolucaoEntity compare = new EvolucaoEntity();
-        compare.setEstagioUm(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioUm()).get());
-        compare.setEstagioDois(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioDois()).get());
+        compare.setEstagioUm(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioUm()).orElseThrow(() -> new RegraDeNegocioException("Estágio 1 não encontrado")));
+        compare.setEstagioDois(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioDois()).orElseThrow(() -> new RegraDeNegocioException("Estágio 2 não encontrado")));
         if (evolucaoCreateDTO.getIdEstagioTres() != null) {
-            compare.setEstagioTres(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioTres()).get());
+            compare.setEstagioTres(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioTres()).orElseThrow(() -> new RegraDeNegocioException("Estágio 3 não encontrado")));
         }
 
         EvolucaoEntity evolucaoEntity = findById(idEvolucao);
@@ -133,10 +133,10 @@ public class EvolucaoService {
             throw new RegraDeNegocioException("Pokémon deve ser diferente, pois, já existe em uma evolução cadastrada");
         }
 
-        evolucaoEntity.setEstagioUm(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioUm()).get());
-        evolucaoEntity.setEstagioDois(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioDois()).get());
+        evolucaoEntity.setEstagioUm(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioUm()).orElseThrow(() -> new RegraDeNegocioException("Estágio 1 não encontrado")));
+        evolucaoEntity.setEstagioDois(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioDois()).orElseThrow(() -> new RegraDeNegocioException("Estágio 2 não encontrado")));
         if (evolucaoCreateDTO.getIdEstagioTres() != null) {
-            evolucaoEntity.setEstagioTres(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioTres()).get());
+            evolucaoEntity.setEstagioTres(pokemonRepository.findById(evolucaoCreateDTO.getIdEstagioTres()).orElseThrow(() -> new RegraDeNegocioException("Estágio 3 não encontrado")));
         }
         EvolucaoEntity update = evolucaoRepository.save(evolucaoEntity);
         EvolucaoDTO evolucaoDTO = new EvolucaoDTO();
@@ -150,14 +150,14 @@ public class EvolucaoService {
     public void delete(Integer idEvolucao) throws RegraDeNegocioException {
         List<PokemonEntity> list = new ArrayList<>();
         EvolucaoEntity entity = findById(idEvolucao);
-        PokemonEntity updateUm = pokemonRepository.findById(entity.getEstagioUm().getIdPokemon()).get();
+        PokemonEntity updateUm = pokemonRepository.findById(entity.getEstagioUm().getIdPokemon()).orElseThrow(() -> new RegraDeNegocioException("Estágio 1 não encontrado"));
         updateUm.setEvolucaoEntity(null);
-        PokemonEntity updateDois = pokemonRepository.findById(entity.getEstagioDois().getIdPokemon()).get();
+        PokemonEntity updateDois = pokemonRepository.findById(entity.getEstagioDois().getIdPokemon()).orElseThrow(() -> new RegraDeNegocioException("Estágio 2 não encontrado"));
         updateDois.setEvolucaoEntity(null);
         list.add(updateUm);
         list.add(updateDois);
         if (entity.getEstagioTres() != null) {
-            PokemonEntity updateTres = pokemonRepository.findById(entity.getEstagioTres().getIdPokemon()).get();
+            PokemonEntity updateTres = pokemonRepository.findById(entity.getEstagioTres().getIdPokemon()).orElseThrow(() -> new RegraDeNegocioException("Estágio 3 não encontrado"));
             updateTres.setEvolucaoEntity(null);
             list.add(updateTres);
         }
@@ -166,7 +166,7 @@ public class EvolucaoService {
     }
 
     public void updateToNull(Integer idEvolucao) throws RegraDeNegocioException {
-        EvolucaoEntity evolucaoEntity = evolucaoRepository.findById(idEvolucao).get();
+        EvolucaoEntity evolucaoEntity = evolucaoRepository.findById(idEvolucao).orElseThrow(() -> new RegraDeNegocioException("Evolução não encontrada"));
         evolucaoEntity.setEstagioUm(null);
         evolucaoEntity.setEstagioDois(null);
         evolucaoEntity.setEstagioTres(null);
