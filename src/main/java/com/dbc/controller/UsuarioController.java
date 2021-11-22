@@ -38,7 +38,7 @@ public class UsuarioController {
         usuarioService.deleteByid(idUsuario);
     }
 
-    @PutMapping("/upadate-password/{loginUsuario}")
+    @PutMapping("/update-password/{loginUsuario}")
     public UsuarioDTO updatePassword(@PathVariable("loginUsuario") String loginUsuario,
                            @RequestBody @Valid UsuarioUpdateDTO usuarioUpdateDTO)
             throws RegraDeNegocioException {
