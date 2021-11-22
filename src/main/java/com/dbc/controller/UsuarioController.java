@@ -1,7 +1,6 @@
 package com.dbc.controller;
 
-import com.dbc.dto.UsuarioCreateDTO;
-import com.dbc.dto.UsuarioDTO;
+import com.dbc.dto.*;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +28,15 @@ public class UsuarioController {
     }
 
     @PutMapping("/{idUsuario}")
-    public UsuarioDTO update(@PathVariable("idUsuario") Integer idUsuario, @RequestBody @Valid UsuarioCreateDTO usuarioCreateDTO) {
-        return null;
+    public UsuarioCreateDTO update(@PathVariable("idUsuario") Integer idUsuario,
+                                   @RequestBody @Valid UsuarioCreateDTO usuarioCreateDTO) throws RegraDeNegocioException {
+        return usuarioService.update(idUsuario, usuarioCreateDTO);
     }
+
 
     @DeleteMapping("/{idUsuario}")
-    public void delete(@PathVariable("idUsuario") Integer idUsuario) {
-
+    public void deleteById(@PathVariable("idUsuario") Integer idUsuario) throws RegraDeNegocioException {
+        usuarioService.deleteByid(idUsuario);
     }
+
 }

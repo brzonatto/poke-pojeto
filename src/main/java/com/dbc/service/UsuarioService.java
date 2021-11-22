@@ -1,10 +1,7 @@
 package com.dbc.service;
 
-import com.dbc.dto.GrupoDTO;
-import com.dbc.dto.UsuarioCreateDTO;
-import com.dbc.dto.UsuarioDTO;
-import com.dbc.entity.GrupoEntity;
-import com.dbc.entity.UsuarioEntity;
+import com.dbc.dto.*;
+import com.dbc.entity.*;
 import com.dbc.exceptions.RegraDeNegocioException;
 import com.dbc.repository.GrupoRepository;
 import com.dbc.repository.UsuarioRepository;
@@ -27,6 +24,11 @@ public class UsuarioService {
 
     public Optional<UsuarioEntity> findByLogin(String login) {
         return usuarioRepository.findByLogin(login);
+    }
+
+    public UsuarioEntity findById(Integer id) throws RegraDeNegocioException {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new RegraDeNegocioException("Não encontrado"));
     }
 
     public UsuarioDTO create(UsuarioCreateDTO usuarioCreateDTO) throws RegraDeNegocioException {
@@ -73,5 +75,24 @@ public class UsuarioService {
                         .collect(Collectors.toList())
         );
         return usuarioDTO;
+    }
+
+    public UsuarioCreateDTO update(Integer idUsuario, UsuarioCreateDTO usuarioCreateDTO) throws RegraDeNegocioException {
+        UsuarioEntity find = findById(idUsuario);
+        find.setSenha(usuarioCreateDTO.getSenha());
+        UsuarioEntity update = usuarioRepository.save(find);
+        return objectMapper.convertValue(update,UsuarioCreateDTO.class);
+    }
+
+
+    public void delete(String loginUsuario) throws RegraDeNegocioException {
+        Optional<UsuarioEntity> find = findByLogin(loginUsuario);
+        UsuarioEntity usuarioEntity = objectMapper.convertValue(find, UsuarioEntity.class);
+        usuarioRepository.delete(usuarioEntity);
+    }
+
+    public void deleteByid(Integer idUsuario) throws RegraDeNegocioException {
+        UsuarioEntity find = findById(idUsuario);
+        usuarioRepository.delete(find);
     }
 }
