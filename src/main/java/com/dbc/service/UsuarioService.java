@@ -77,22 +77,51 @@ public class UsuarioService {
         return usuarioDTO;
     }
 
-    public UsuarioCreateDTO update(Integer idUsuario, UsuarioCreateDTO usuarioCreateDTO) throws RegraDeNegocioException {
+    public UsuarioDTO update(Integer idUsuario, UsuarioCreateDTO usuarioCreateDTO) throws RegraDeNegocioException {
+        List<GrupoEntity> grupoEntities = new ArrayList<>();
+        for (Integer key : usuarioCreateDTO.getGrupos()) {
+            grupoEntities.add(grupoRepository.findById(key)
+                    .orElseThrow(() -> new RegraDeNegocioException("Grupo não encontrado")));
+        }
         UsuarioEntity find = findById(idUsuario);
-        find.setSenha(usuarioCreateDTO.getSenha());
+        find.setSenha(new BCryptPasswordEncoder().encode(usuarioCreateDTO.getSenha()));
+        find.setLogin(usuarioCreateDTO.getUsuario());
+        find.setGrupos(grupoEntities);
         UsuarioEntity update = usuarioRepository.save(find);
-        return objectMapper.convertValue(update,UsuarioCreateDTO.class);
-    }
-
-
-    public void delete(String loginUsuario) throws RegraDeNegocioException {
-        Optional<UsuarioEntity> find = findByLogin(loginUsuario);
-        UsuarioEntity usuarioEntity = objectMapper.convertValue(find, UsuarioEntity.class);
-        usuarioRepository.delete(usuarioEntity);
+        UsuarioDTO usuarioDTO = new UsuarioDTO(
+                update.getIdUsuario(),
+                update.getLogin(),
+                update.getGrupos()
+                        .stream()
+                        .map(grupo -> objectMapper.convertValue(grupo, GrupoDTO.class))
+                        .collect(Collectors.toList())
+        );
+        return usuarioDTO;
     }
 
     public void deleteByid(Integer idUsuario) throws RegraDeNegocioException {
         UsuarioEntity find = findById(idUsuario);
         usuarioRepository.delete(find);
+    }
+
+    public UsuarioDTO updatePassword(String loginUsuario, UsuarioUpdateDTO usuarioUpdateDTO) throws RegraDeNegocioException {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        UsuarioEntity find = findByLogin(loginUsuario)
+                .orElseThrow(() -> new RegraDeNegocioException("login não encontrado"));
+        if (passwordEncoder.matches(usuarioUpdateDTO.getOldSenha(), find.getSenha())) {
+            find.setSenha(passwordEncoder.encode(usuarioUpdateDTO.getNewSenha()));
+        } else {
+            throw new RegraDeNegocioException("Senha incorreta");
+        }
+        UsuarioEntity update = usuarioRepository.save(find);
+        UsuarioDTO usuarioDTO = new UsuarioDTO(
+                update.getIdUsuario(),
+                update.getLogin(),
+                update.getGrupos()
+                        .stream()
+                        .map(grupo -> objectMapper.convertValue(grupo, GrupoDTO.class))
+                        .collect(Collectors.toList())
+        );
+        return usuarioDTO;
     }
 }

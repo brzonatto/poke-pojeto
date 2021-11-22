@@ -28,15 +28,20 @@ public class UsuarioController {
     }
 
     @PutMapping("/{idUsuario}")
-    public UsuarioCreateDTO update(@PathVariable("idUsuario") Integer idUsuario,
+    public UsuarioDTO update(@PathVariable("idUsuario") Integer idUsuario,
                                    @RequestBody @Valid UsuarioCreateDTO usuarioCreateDTO) throws RegraDeNegocioException {
         return usuarioService.update(idUsuario, usuarioCreateDTO);
     }
-
 
     @DeleteMapping("/{idUsuario}")
     public void deleteById(@PathVariable("idUsuario") Integer idUsuario) throws RegraDeNegocioException {
         usuarioService.deleteByid(idUsuario);
     }
 
+    @PutMapping("/upadate-password/{loginUsuario}")
+    public UsuarioDTO updatePassword(@PathVariable("loginUsuario") String loginUsuario,
+                           @RequestBody @Valid UsuarioUpdateDTO usuarioUpdateDTO)
+            throws RegraDeNegocioException {
+        return usuarioService.updatePassword(loginUsuario, usuarioUpdateDTO);
+    }
 }
