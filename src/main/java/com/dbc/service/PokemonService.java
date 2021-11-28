@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +35,7 @@ public class PokemonService {
     public List<PokemonDTO> list() {
         return pokemonRepository.findAll().stream()
                 .map(pokemon -> objectMapper.convertValue(pokemon, PokemonDTO.class))
+                .sorted(Comparator.comparing(a -> a.getNumero()))
                 .collect(Collectors.toList());
     }
 
