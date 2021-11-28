@@ -42,7 +42,7 @@ public class TokenService {
                 .collect(Collectors.toList());
 
         String jwtToken = Jwts.builder()
-                .setIssuer("pessoa-api")
+                .setIssuer("pokemon-projeto")
                 .claim(CLAIM_PERMISSOES, permissoes)
                 .setSubject(usuario.getIdUsuario().toString())
                 .setIssuedAt(generateDate)
